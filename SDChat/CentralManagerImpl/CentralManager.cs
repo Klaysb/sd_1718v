@@ -8,7 +8,8 @@ namespace CentralManagerImpl
     {
 
         private ConcurrentDictionary<int, IBroker> users = new ConcurrentDictionary<int, IBroker>();
-        private ConcurrentDictionary<string, string> groupNames = new ConcurrentDictionary<string, string>();
+        private ConcurrentDictionary<string, IBroker> groupNames = new ConcurrentDictionary<string, IBroker>();
+
 
         public bool ExistsUser(int userNumber)
         {
@@ -21,9 +22,9 @@ namespace CentralManagerImpl
                 throw new ArgumentException($"User already exists with number: {userNumber}");
         }
 
-        public void RegisterGroup(string groupName)
+        public void RegisterGroup(string groupName, IBroker broker)
         {
-            if (!groupNames.TryAdd(groupName, groupName))
+            if (!groupNames.TryAdd(groupName, broker))
                 throw new ArgumentException($"The group name {groupName} already exists.");
         }
 
@@ -44,7 +45,18 @@ namespace CentralManagerImpl
 
         public void UnregisterGroup(string groupName)
         {
-            groupNames.TryRemove(groupName, out string value);
+            groupNames.TryRemove(groupName, out IBroker broker);
         }
+
+        public void AddUserToGroup(int adderMember, int userNumber, string groupName)
+        {
+            if (!users.ContainsKey(userNumber))
+                throw new ArgumentException($"The user with number {userNumber} does not exist.");
+            if(groupNames.TryGetValue(groupName, out IBroker broker))
+            {
+                broker.AddUserToGroup(adderMember, userNumber, groupName);
+            }
+        }
+
     }
 }

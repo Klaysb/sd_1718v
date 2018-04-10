@@ -33,7 +33,8 @@
         /// Unregister a group with the <paramref name="groupName"/> identifier.
         /// </summary>
         /// <param name="groupName">Name of the group.</param>
-        void UnregisterGroup(string groupName);
+        /// <param name="userNumber">the identifier of the user that wants to unregister the group.</param>
+        void UnregisterGroup(string groupName, int userNumber);
 
         /// <summary>
         /// Sends a message to a user.

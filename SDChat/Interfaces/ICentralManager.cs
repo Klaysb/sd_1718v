@@ -19,7 +19,7 @@
         /// Register a group.
         /// </summary>
         /// <param name="groupName">Name of the group.</param>
-        void RegisterGroup(string groupName);
+        void RegisterGroup(string groupName, IBroker broker);
 
         /// <summary>
         /// Unregister a group with the <paramref name="groupName"/> identifier.
@@ -41,5 +41,13 @@
         /// <param name="userNumber">The identifier of the user to search if exists.</param>
         /// <returns></returns>
         bool ExistsUser(int userNumber);
+
+        /// <summary>
+        /// Adds a user to a group.
+        /// </summary>
+        /// <param name="adderMember">User already belonging to the group that will add another user.</param>
+        /// <param name="userNumber">User that will be added to the group.</param>
+        /// <param name="groupName">Name of the group.</param>
+        void AddUserToGroup(int adderMember, int userNumber, string groupName);
     }
 }
