@@ -7,8 +7,8 @@
     <ProjectGuid>{7D7169A1-739B-49A9-8312-450BB13BDB44}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Interfaces</RootNamespace>
-    <AssemblyName>Interfaces</AssemblyName>
+    <RootNamespace>BrokerInterface</RootNamespace>
+    <AssemblyName>BrokerInterface</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

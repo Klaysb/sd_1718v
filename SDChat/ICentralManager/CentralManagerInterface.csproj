@@ -7,8 +7,8 @@
     <ProjectGuid>{24F88940-A2AB-4519-A124-6BE407685336}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ICentralManager</RootNamespace>
-    <AssemblyName>ICentralManager</AssemblyName>
+    <RootNamespace>CentralManagerInterface</RootNamespace>
+    <AssemblyName>CentralManagerInterface</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -44,7 +44,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Interfaces\BrokerInterface.csproj">
+    <ProjectReference Include="..\BrokerInterface\BrokerInterface.csproj">
       <Project>{7D7169A1-739B-49A9-8312-450BB13BDB44}</Project>
       <Name>BrokerInterface</Name>
     </ProjectReference>

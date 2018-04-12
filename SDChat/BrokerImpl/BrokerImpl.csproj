@@ -44,6 +44,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BrokerInterface\BrokerInterface.csproj">
+      <Project>{7D7169A1-739B-49A9-8312-450BB13BDB44}</Project>
+      <Name>BrokerInterface</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GroupImpl\GroupImpl.csproj">
       <Project>{db9450ec-ae45-4c75-ab6b-8589d51f605f}</Project>
       <Name>GroupImpl</Name>
@@ -51,10 +55,6 @@
     <ProjectReference Include="..\ICentralManager\CentralManagerInterface.csproj">
       <Project>{24F88940-A2AB-4519-A124-6BE407685336}</Project>
       <Name>CentralManagerInterface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Interfaces\BrokerInterface.csproj">
-      <Project>{7d7169a1-739b-49a9-8312-450bb13bdb44}</Project>
-      <Name>BrokerInterface</Name>
     </ProjectReference>
     <ProjectReference Include="..\UserInterface\UserInterface.csproj">
       <Project>{478227E8-EE87-4BFB-9B94-05A55AB45D5A}</Project>
