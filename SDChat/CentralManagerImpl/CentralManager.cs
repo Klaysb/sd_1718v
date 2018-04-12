@@ -1,6 +1,7 @@
-﻿using Interfaces;
+﻿using CentralManagerInterface;
 using System;
 using System.Collections.Concurrent;
+using BrokerInterface;
 
 namespace CentralManagerImpl
 {
@@ -40,12 +41,14 @@ namespace CentralManagerImpl
 
         public void Unregister(int userNumber)
         {
-            users.TryRemove(userNumber, out IBroker broker);
+            if(!users.TryRemove(userNumber, out IBroker broker))
+                throw new ArgumentException($"User with number: {userNumber} does not exist.");
         }
 
         public void UnregisterGroup(string groupName)
         {
-            groupNames.TryRemove(groupName, out IBroker broker);
+            if (!groupNames.TryRemove(groupName, out IBroker broker))
+                throw new ArgumentException($"Group with name: {groupName} does not exist.");
         }
 
         public void AddUserToGroup(int adderMember, int userNumber, string groupName)

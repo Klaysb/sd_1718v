@@ -1,8 +1,10 @@
 ﻿using GroupImpl;
-using Interfaces;
+using BrokerInterface;
+using UserInterface;
+using CentralManagerInterface;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace BrokerImpl
 {
@@ -18,18 +20,18 @@ namespace BrokerImpl
         {
             if(groupNames.TryGetValue(groupName, out Group group))
             {
-                if (group.UsersInSameRegion.Exists(u => u == adderMember))
+                if (group.UsersInSameRegion.ContainsKey(adderMember))
                 {
                     if (users.ContainsKey(userNumber))
                     {
-                        group.UsersInSameRegion.Add(userNumber);
+                        group.UsersInSameRegion.TryAdd(userNumber, userNumber);
                     }
                     else
                     {
                         try
                         {
                             manager.AddUserToGroup(adderMember, userNumber, groupName);
-                            group.UsersInAnotherRegion.Add(userNumber);
+                            group.UsersInAnotherRegion.TryAdd(userNumber, userNumber);
                         } 
                         catch(ArgumentException)
                         {
@@ -69,13 +71,8 @@ namespace BrokerImpl
             {
                 CheckIfRegistered(userNumber);
                 manager.RegisterGroup(groupName, this);
-                var group = new Group
-                {
-                    Name = groupName,
-                    Owner = userNumber,
-                    UsersInSameRegion = new List<int> { userNumber },
-                    UsersInAnotherRegion = new List<int>()
-                };
+                var group = new Group(userNumber, groupName);
+                group.UsersInSameRegion.TryAdd(userNumber, userNumber);
                 groupNames.TryAdd(groupName, group);
             }
             catch (ArgumentException)
@@ -91,29 +88,44 @@ namespace BrokerImpl
         public void SendMessageToGroup(string groupName, string message, int srcUserNumber)
         {
             CheckIfRegistered(srcUserNumber);
-
             if (groupNames.TryGetValue(groupName, out Group group))
             {
                 users.TryGetValue(srcUserNumber, out IUser srcUser);
-                group.UsersInSameRegion.ForEach(userNumber =>
+                bool exceptionOccurred = false;
+                group.UsersInSameRegion.Keys.ToList().ForEach(userNumber =>
                 {
                     if (users.TryGetValue(userNumber, out IUser user))
                     {
-                        // TODO exception
-                        user.AcceptMessage(message, srcUser);
+                        try
+                        {
+                            user.AcceptMessage(message, srcUser);
+                        }
+                        catch (Exception)
+                        {
+                            exceptionOccurred = true;
+                        }
                     }
                 });
-                // TODO exception
-                manager.SendMessageToUsers(message, srcUserNumber, group.UsersInAnotherRegion.ToArray());
+                try
+                {
+                    manager.SendMessageToUsers(message, srcUserNumber, group.UsersInAnotherRegion.Keys.ToArray());
+                }
+                catch (Exception)
+                {
+                    throw new Exception("Could not send message to users outside of your region.");
+                }
+
+                if (exceptionOccurred) throw new Exception("Could not send message to all users.");
             }
             else throw new ArgumentException($"The group {groupName} does not exist.");
         }
 
         public void SendMessageToUser(int destUserNumber, string message, int srcUserNumber)
         {
+            CheckIfRegistered(srcUserNumber);
+            users.TryGetValue(srcUserNumber, out IUser srcUser);
             try
             {
-                users.TryGetValue(srcUserNumber, out IUser srcUser);
                 if (users.TryGetValue(destUserNumber, out IUser user))
                 {
                     user.AcceptMessage(message, srcUser);
@@ -123,35 +135,52 @@ namespace BrokerImpl
                     manager.SendMessageToUsers(message, srcUserNumber, destUserNumber);
                 }
             }
-            catch(Exception ex)
-            {
-                // TODO
-            }
+            catch (Exception) { throw new Exception("Could not send message to user"); }
         }
 
         public void Unregister(int userNumber)
         {
+            CheckIfRegistered(userNumber);
             try
             {
                 manager.Unregister(userNumber);
                 users.TryRemove(userNumber, out IUser user);
             }
-            catch(Exception ex)
+            catch (ArgumentException)
             {
-                users.TryGetValue(userNumber, out IUser user);
-                user.AcceptMessage("Cannot unregister user.", null);
+                throw;
+            }
+            catch(Exception)
+            {
+                throw new Exception("Cannot connect to server.");
             }
         }
 
         public void UnregisterGroup(string groupName, int userNumber)
         {
+            CheckIfRegistered(userNumber);
+            if(!groupNames.TryGetValue(groupName, out Group group))
+            {
+                throw new ArgumentException($"Group with name {groupName} does not exist.");
+            }
+
+            if(group.Owner != userNumber)
+            {
+                throw new ArgumentException("You do not have permission to delete this group.");
+            }
+            
             try
             {
-                //manager.UnregisterGroup()
+                manager.UnregisterGroup(groupName);
+                groupNames.TryRemove(groupName, out Group g);
             }
-            catch(Exception ex)
+            catch(ArgumentException)
             {
-
+                throw;
+            }
+            catch(Exception)
+            {
+                throw new Exception("Cannot connect to server.");
             }
         }
 

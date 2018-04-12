@@ -1,4 +1,6 @@
-﻿namespace Interfaces
+﻿using BrokerInterface;
+
+namespace CentralManagerInterface
 {
     public interface ICentralManager
     {

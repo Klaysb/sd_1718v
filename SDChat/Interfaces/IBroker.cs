@@ -1,4 +1,6 @@
-﻿namespace Interfaces
+﻿using UserInterface;
+
+namespace BrokerInterface
 {
     public interface IBroker
     {

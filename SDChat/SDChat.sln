@@ -1,15 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27428.2027
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interfaces", "Interfaces\Interfaces.csproj", "{7D7169A1-739B-49A9-8312-450BB13BDB44}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrokerInterface", "Interfaces\BrokerInterface.csproj", "{7D7169A1-739B-49A9-8312-450BB13BDB44}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CentralManagerImpl", "CentralManagerImpl\CentralManagerImpl.csproj", "{8161DC50-875F-4936-8B12-FDD089C43220}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrokerImpl", "BrokerImpl\BrokerImpl.csproj", "{2D59B94E-AEEF-4F3C-B42D-CF72AD713849}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroupImpl", "GroupImpl\GroupImpl.csproj", "{DB9450EC-AE45-4C75-AB6B-8589D51F605F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CentralManagerInterface", "ICentralManager\CentralManagerInterface.csproj", "{24F88940-A2AB-4519-A124-6BE407685336}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserInterface", "UserInterface\UserInterface.csproj", "{478227E8-EE87-4BFB-9B94-05A55AB45D5A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{DB9450EC-AE45-4C75-AB6B-8589D51F605F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB9450EC-AE45-4C75-AB6B-8589D51F605F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB9450EC-AE45-4C75-AB6B-8589D51F605F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24F88940-A2AB-4519-A124-6BE407685336}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24F88940-A2AB-4519-A124-6BE407685336}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24F88940-A2AB-4519-A124-6BE407685336}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24F88940-A2AB-4519-A124-6BE407685336}.Release|Any CPU.Build.0 = Release|Any CPU
+		{478227E8-EE87-4BFB-9B94-05A55AB45D5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{478227E8-EE87-4BFB-9B94-05A55AB45D5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{478227E8-EE87-4BFB-9B94-05A55AB45D5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{478227E8-EE87-4BFB-9B94-05A55AB45D5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

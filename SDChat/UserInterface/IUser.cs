@@ -1,4 +1,4 @@
-﻿namespace Interfaces
+﻿namespace UserInterface
 {
     public interface IUser
     {

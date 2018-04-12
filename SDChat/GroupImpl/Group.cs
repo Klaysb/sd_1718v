@@ -1,13 +1,21 @@
-﻿using Interfaces;
+﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace GroupImpl
 {
     public class Group
     {
-        public string Name { get; set; }
-        public int Owner { get; set; }
-        public List<int> UsersInSameRegion { get; set; }
-        public List<int> UsersInAnotherRegion { get; set; } 
+        private readonly int owner;
+        public int Owner { get { return owner; } }
+        private readonly string name;
+        public string Name { get { return name; } }
+        public ConcurrentDictionary<int, int> UsersInSameRegion { get; set; } = new ConcurrentDictionary<int, int>();
+        public ConcurrentDictionary<int, int> UsersInAnotherRegion { get; set; } = new ConcurrentDictionary<int, int>();
+
+        public Group(int owner, string name)
+        {
+            this.owner = owner;
+            this.name = name;
+        }
     }
 }
