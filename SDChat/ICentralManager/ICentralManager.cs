@@ -50,9 +50,11 @@ namespace CentralManagerInterface
         /// <summary>
         /// Adds a user to a group.
         /// </summary>
+        /// <param name="owner">The identifier of the group's owner.</param>
         /// <param name="adderMember">User already belonging to the group that will add another user.</param>
         /// <param name="userNumber">User that will be added to the group.</param>
         /// <param name="groupName">Name of the group.</param>
-        void AddUserToGroup(int adderMember, int userNumber, string groupName);
+        /// <param name="userNumbers">The identifiers of the users to be added.</param>
+        void AddUserToGroup(int owner, int adderMember, int userNumber, string groupName, int[] userNumbers);
     }
 }

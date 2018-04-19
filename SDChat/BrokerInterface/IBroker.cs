@@ -32,6 +32,15 @@ namespace BrokerInterface
         void AddUserToGroup(int adderMember, int userNumber, string groupName);
 
         /// <summary>
+        /// Adds a user to a group.
+        /// </summary>
+        /// <param name="owner">The identifier of the group's owner.</param>
+        /// <param name="userNumber">The identifier of the user that will be added.</param>
+        /// <param name="groupName">The identifier of the group.</param>
+        /// <param name="userNumbers">The identifiers of the members of the group.</param>
+        void AddUserToGroup(int owner, int userNumber, string groupName, int[] userNumbers);
+
+        /// <summary>
         /// Unregister a group with the <paramref name="groupName"/> identifier.
         /// </summary>
         /// <param name="groupName">Name of the group.</param>
@@ -61,6 +70,5 @@ namespace BrokerInterface
         /// <param name="message">The message to be sent.</param>
         /// <param name="srcUserNumber">The user that sends this message.</param>
         void SendMessageToGroup(string groupName, string message, int srcUserNumber);
-
     }
 }

@@ -3,14 +3,14 @@ using System;
 using System.Collections.Concurrent;
 using BrokerInterface;
 using UserInterface;
+using System.Collections.Generic;
 
 namespace CentralManagerImpl
 {
     public class CentralManager : MarshalByRefObject, ICentralManager
     {
         private ConcurrentDictionary<int, Tuple<IUser, IBroker>> users = new ConcurrentDictionary<int, Tuple<IUser, IBroker>>();
-        private ConcurrentDictionary<string, IBroker> groupNames = new ConcurrentDictionary<string, IBroker>();
-
+        private ConcurrentDictionary<string, HashSet<IBroker>> groupNames = new ConcurrentDictionary<string, HashSet<IBroker>>();
 
         public bool ExistsUser(int userNumber)
         {
@@ -25,7 +25,7 @@ namespace CentralManagerImpl
 
         public void RegisterGroup(string groupName, IBroker broker)
         {
-            if (!groupNames.TryAdd(groupName, broker))
+            if (!groupNames.TryAdd(groupName, new HashSet<IBroker> { broker }))
                 throw new ArgumentException($"The group name {groupName} already exists.");
         }
 
@@ -35,8 +35,9 @@ namespace CentralManagerImpl
             {
                 try
                 {
-                    if (users.TryGetValue(userNumber, out Tuple<IUser, IBroker> tuple))
-                        tuple.Item2.SendMessageToUser(userNumber, message, tuple.Item1);
+                    if (users.TryGetValue(userNumber, out Tuple<IUser, IBroker> tuple) &&
+                        users.TryGetValue(srcUserNumber, out Tuple<IUser, IBroker> srcTuple))
+                            tuple.Item2.SendMessageToUser(userNumber, message, srcTuple.Item1);
                 }
                 catch (Exception)
                 {
@@ -53,26 +54,32 @@ namespace CentralManagerImpl
 
         public void UnregisterGroup(string groupName)
         {
-            if (!groupNames.TryRemove(groupName, out IBroker broker))
+            if (!groupNames.TryRemove(groupName, out HashSet<IBroker> brokers))
                 throw new ArgumentException($"Group with name: {groupName} does not exist.");
         }
 
-        public void AddUserToGroup(int adderMember, int userNumber, string groupName)
+        public void AddUserToGroup(int owner, int adderMember, int userNumber, string groupName, int[] userNumbers)
         {
-            if (!users.ContainsKey(userNumber))
-                throw new ArgumentException($"The user with number {userNumber} does not exist.");
-            if(groupNames.TryGetValue(groupName, out IBroker broker))
+            if (users.TryGetValue(userNumber, out Tuple<IUser, IBroker> tuple))
             {
-                try
+                if (groupNames.TryGetValue(groupName, out HashSet<IBroker> brokers))
                 {
-                    broker.AddUserToGroup(adderMember, userNumber, groupName);
-                }
-                catch(Exception)
-                {
-                    throw;
+                    brokers.Add(tuple.Item2);
+                    try
+                    {
+                        foreach (IBroker broker in brokers)
+                        {
+                            broker.AddUserToGroup(owner, userNumber, groupName, userNumbers);
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
                 }
             }
+            else
+                throw new ArgumentException($"The user with number {userNumber} does not exist.");
         }
-
     }
 }

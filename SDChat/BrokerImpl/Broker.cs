@@ -23,30 +23,49 @@ namespace BrokerImpl
             {
                 if (group.UsersInSameRegion.ContainsKey(adderMember))
                 {
-                    if (users.ContainsKey(userNumber))
+                    try
                     {
-                        group.UsersInSameRegion.TryAdd(userNumber, userNumber);
-                    }
-                    else
-                    {
-                        try
+                        var members = group.UsersInAnotherRegion.Keys.Concat(group.UsersInSameRegion.Keys).ToArray();
+                        if (users.ContainsKey(userNumber))
                         {
-                            manager.AddUserToGroup(adderMember, userNumber, groupName);
+                            group.UsersInSameRegion.TryAdd(userNumber, userNumber);
+                            if (group.UsersInAnotherRegion.Count != 0)
+                                manager.AddUserToGroup(group.Owner, adderMember, userNumber, groupName, members);
+                        }
+                        else
+                        {
+                            manager.AddUserToGroup(group.Owner, adderMember, userNumber, groupName, members);
                             group.UsersInAnotherRegion.TryAdd(userNumber, userNumber);
-                        } 
-                        catch(ArgumentException)
-                        {
-                            throw; 
                         }
-                        catch(Exception)
-                        {
-                            throw new Exception("Cannot connect to server.");
-                        }
+                    }
+                    catch (ArgumentException)
+                    {
+                        throw;
+                    }
+                    catch (Exception)
+                    {
+                        throw new Exception("Cannot connect to server.");
                     }
                 }
                 else throw new ArgumentException($"The user with the number {adderMember} is not part of the group");
             }
             else throw new ArgumentException($"The group {groupName} does not exist."); 
+        }
+
+        public void AddUserToGroup(int owner, int userNumber, string groupName, int[] userNumbers)
+        {
+            Group group = null;
+            if (!groupNames.TryGetValue(groupName, out group))
+            {
+                group = new Group(owner, groupName);
+                groupNames.TryAdd(groupName, group);
+                foreach (int curr in userNumbers)
+                    group.UsersInAnotherRegion.TryAdd(curr, curr);
+            }
+            if (users.ContainsKey(userNumber))
+                group.UsersInSameRegion.TryAdd(userNumber, userNumber);
+            else
+                group.UsersInAnotherRegion.TryAdd(userNumber, userNumber);
         }
 
         public void Register(IUser user)
