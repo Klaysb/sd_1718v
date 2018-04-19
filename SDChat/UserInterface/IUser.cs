@@ -5,12 +5,12 @@
         /// <summary>
         /// The name of the user.
         /// </summary>
-        string UserName { get; }
+        string GetUserName();
 
         /// <summary>
         /// The user's phone number.
         /// </summary>
-        int UserNumber { get; }
+        int GetUserNumber();
 
         /// <summary>
         /// Accept message from other users.

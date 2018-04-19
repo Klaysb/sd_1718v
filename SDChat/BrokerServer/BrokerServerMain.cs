@@ -21,7 +21,7 @@ namespace BrokerServer
                 Console.ReadLine();
                 return;
             }
-
+            
             var services = RemotingConfiguration.GetRegisteredWellKnownServiceTypes();
             if (services.Length == 0)
             {
@@ -31,9 +31,9 @@ namespace BrokerServer
             }
 
             var central = (ICentralManager) Activator.GetObject(clients[0].ObjectType, clients[0].ObjectUrl);
-            var broker = (IBroker)Activator.CreateInstance(services[0].ObjectType, services[0].ObjectUri);
-
-
+            var broker = new Broker(central);
+            //var channels = ChannelServices.RegisteredChannels;
+            ObjRef objrefWellKnown = RemotingServices.Marshal((MarshalByRefObject)broker, services[0].ObjectUri);
 
             Console.WriteLine("Início do Server Broker.\n Espera de pedidos");
             Console.ReadLine();

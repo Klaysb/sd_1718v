@@ -12,9 +12,11 @@ namespace BrokerImpl
     public class Broker : MarshalByRefObject, IBroker
     {
 
-        public ICentralManager Manager { get; set; }
+        private ICentralManager manager;
         private readonly ConcurrentDictionary<int, IUser> users = new ConcurrentDictionary<int, IUser>();
-        private readonly ConcurrentDictionary<string, Group> groupNames = new ConcurrentDictionary<string, Group>(); 
+        private readonly ConcurrentDictionary<string, Group> groupNames = new ConcurrentDictionary<string, Group>();
+
+        public Broker(ICentralManager manager) => this.manager = manager;
 
         public void AddUserToGroup(int adderMember, int userNumber, string groupName)
         {
@@ -30,7 +32,7 @@ namespace BrokerImpl
                     {
                         try
                         {
-                            Manager.AddUserToGroup(adderMember, userNumber, groupName);
+                            manager.AddUserToGroup(adderMember, userNumber, groupName);
                             group.UsersInAnotherRegion.TryAdd(userNumber, userNumber);
                         } 
                         catch(ArgumentException)
@@ -52,14 +54,14 @@ namespace BrokerImpl
         {
             try
             {
-                Manager.Register(user.UserNumber, this);
-                users.TryAdd(user.UserNumber, user);
+                manager.Register(user.GetUserNumber(), this);
+                users.TryAdd(user.GetUserNumber(), user);
             }
             catch (ArgumentException)
             {
                 throw;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw new Exception("Cannot connect to server.");
             }
@@ -70,7 +72,7 @@ namespace BrokerImpl
             try
             {
                 CheckIfRegistered(userNumber);
-                Manager.RegisterGroup(groupName, this);
+                manager.RegisterGroup(groupName, this);
                 var group = new Group(userNumber, groupName);
                 group.UsersInSameRegion.TryAdd(userNumber, userNumber);
                 groupNames.TryAdd(groupName, group);
@@ -108,7 +110,7 @@ namespace BrokerImpl
                 });
                 try
                 {
-                    Manager.SendMessageToUsers(message, srcUserNumber, group.UsersInAnotherRegion.Keys.ToArray());
+                    manager.SendMessageToUsers(message, srcUserNumber, group.UsersInAnotherRegion.Keys.ToArray());
                 }
                 catch (Exception)
                 {
@@ -132,10 +134,10 @@ namespace BrokerImpl
                 }
                 else
                 {
-                    Manager.SendMessageToUsers(message, srcUserNumber, destUserNumber);
+                    manager.SendMessageToUsers(message, srcUserNumber, destUserNumber);
                 }
             }
-            catch (Exception) { throw new Exception("Could not send message to user"); }
+            catch (Exception ex) { throw new Exception("Could not send message to user"); }
         }
 
         public void Unregister(int userNumber)
@@ -143,7 +145,7 @@ namespace BrokerImpl
             CheckIfRegistered(userNumber);
             try
             {
-                Manager.Unregister(userNumber);
+                manager.Unregister(userNumber);
                 users.TryRemove(userNumber, out IUser user);
             }
             catch (ArgumentException)
@@ -171,7 +173,7 @@ namespace BrokerImpl
             
             try
             {
-                Manager.UnregisterGroup(groupName);
+                manager.UnregisterGroup(groupName);
                 groupNames.TryRemove(groupName, out Group g);
             }
             catch(ArgumentException)

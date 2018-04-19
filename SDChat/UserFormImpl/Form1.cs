@@ -2,11 +2,12 @@
 using System;
 using System.Runtime.Remoting;
 using System.Windows.Forms;
+using UserImpl;
 using UserInterface;
 
 namespace UserFormImpl
 {
-    public partial class Form1 : Form, IUser
+    public partial class Form1 : Form
     {
         private static readonly string CONFIG_FILE = "UserFormImpl.exe.config";
         private IBroker broker;
@@ -48,14 +49,20 @@ namespace UserFormImpl
         {
             if (broker == null) return;
             string senderId = UserName ?? UserNumber.ToString();
-            var senderMsg = $"{senderId}: {message}";
+            var senderMsg = $"{senderId}: {message}\n";
             if (userRadioBtn.Checked)
             {
                 try
                 {
                     var destUserNumber = Int32.Parse(receiverTextBox.Text);
+                    if(destUserNumber == UserNumber)
+                    {
+                        MessageBox.Show("Cannot send message to yourself.");
+                        return;
+                    }
                     broker.SendMessageToUser(destUserNumber, message, UserNumber);
                     outputTextBox.AppendText(senderMsg);
+                    inputTextBox.Clear();
                 }
                 catch (FormatException)
                 {
@@ -88,15 +95,19 @@ namespace UserFormImpl
             receiverTextBox.Clear();
         }
 
-        public string UserName => usernameTextBox.Text;
+        private string UserName => usernameTextBox.Text;
 
-        public int UserNumber => Decimal.ToInt32(numberBox.Value);
+        private int UserNumber => Decimal.ToInt32(numberBox.Value);
 
-        public void AcceptMessage(string message, IUser sender)
+        private void PutTextByCallBack(string txt)
         {
-            string senderId = sender.UserName ?? sender.UserNumber.ToString();
-            string msg = $"{senderId}: {message}";
-            outputTextBox.AppendText(msg);
+            if (this.InvokeRequired)
+            {
+                Action<string> action = new Action<string>(this.PutTextByCallBack);
+                object[] args = new object[] { txt };
+                this.Invoke(action, args);
+            }
+            else outputTextBox.AppendText(txt);
         }
 
         private void registerBtn_Click(object sender, EventArgs e)
@@ -112,11 +123,13 @@ namespace UserFormImpl
             try
             {
                 broker = (IBroker)Activator.GetObject(entry.ObjectType, entry.ObjectUrl);
-                broker.Register(this);
+                IUser user = new User(UserNumber, UserName, this.PutTextByCallBack);
+                broker.Register(user);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 MessageBox.Show("Could not connect to the server.");
+                broker = null;
             }
         }
 
