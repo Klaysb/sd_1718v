@@ -1,5 +1,6 @@
 ﻿using BrokerInterface;
 using System;
+using System.Configuration;
 using System.Runtime.Remoting;
 using System.Windows.Forms;
 using UserImpl;
@@ -16,22 +17,24 @@ namespace UserFormImpl
         {
             InitializeComponent();
             RemotingConfiguration.Configure(CONFIG_FILE, false);
-            WellKnownClientTypeEntry[] entries = RemotingConfiguration.GetRegisteredWellKnownClientTypes();
-            BuildMenuItems(entries);
+            BuildMenuItems();
             inputTextBox.KeyPress += new KeyPressEventHandler(CheckEnterPress);
         }
 
-        private void BuildMenuItems(WellKnownClientTypeEntry[] entries)
+        private void BuildMenuItems()
         {
-            ToolStripMenuItem[] items = new ToolStripMenuItem[entries.Length];           
-            for (int i = 0; i < items.Length; i++)
+            var config = ConfigurationSettings.AppSettings;
+            var type = config["type"];
+            var assembly = config["assembly"];
+            ToolStripMenuItem[] items = new ToolStripMenuItem[config.Count - 2];
+            for (int i = 2, j = 0; i < config.Count; i++, j++)
             {
-                WellKnownClientTypeEntry entry = entries[i];
-                items[i] = new ToolStripMenuItem()
+                WellKnownClientTypeEntry entry = new WellKnownClientTypeEntry(type, assembly, config[i]);
+                items[j] = new ToolStripMenuItem()
                 {
                     Name = entry.TypeName,
                     Tag = entry,
-                    Text = "Broker " + (i + 1)
+                    Text = config.GetKey(i)
                     //Click += new EventHandler(MenuItemClickHandler)
                 };
             }
@@ -128,7 +131,7 @@ namespace UserFormImpl
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Could not connect to the server.");
+                MessageBox.Show(ex.Message);
                 broker = null;
             }
         }

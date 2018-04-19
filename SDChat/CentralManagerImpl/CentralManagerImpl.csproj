@@ -52,6 +52,10 @@
       <Project>{24F88940-A2AB-4519-A124-6BE407685336}</Project>
       <Name>CentralManagerInterface</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UserInterface\UserInterface.csproj">
+      <Project>{478227E8-EE87-4BFB-9B94-05A55AB45D5A}</Project>
+      <Name>UserInterface</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

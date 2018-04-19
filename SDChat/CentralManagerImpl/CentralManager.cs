@@ -2,13 +2,13 @@
 using System;
 using System.Collections.Concurrent;
 using BrokerInterface;
+using UserInterface;
 
 namespace CentralManagerImpl
 {
     public class CentralManager : MarshalByRefObject, ICentralManager
     {
-
-        private ConcurrentDictionary<int, IBroker> users = new ConcurrentDictionary<int, IBroker>();
+        private ConcurrentDictionary<int, Tuple<IUser, IBroker>> users = new ConcurrentDictionary<int, Tuple<IUser, IBroker>>();
         private ConcurrentDictionary<string, IBroker> groupNames = new ConcurrentDictionary<string, IBroker>();
 
 
@@ -17,9 +17,9 @@ namespace CentralManagerImpl
             return users.ContainsKey(userNumber);
         }
 
-        public void Register(int userNumber, IBroker broker)
+        public void Register(int userNumber, IUser user, IBroker broker)
         {
-            if (!users.TryAdd(userNumber, broker))
+            if (!users.TryAdd(userNumber, new Tuple<IUser, IBroker>(user, broker)))
                 throw new ArgumentException($"User already exists with number: {userNumber}");
         }
 
@@ -29,19 +29,25 @@ namespace CentralManagerImpl
                 throw new ArgumentException($"The group name {groupName} already exists.");
         }
 
-        // TODO: prevent errors.
         public void SendMessageToUsers(string message, int srcUserNumber, params int[] destUserNumbers)
         {
             foreach (int userNumber in destUserNumbers)
             {
-                if (users.TryGetValue(userNumber, out IBroker broker))
-                    broker.SendMessageToUser(userNumber, message, srcUserNumber);
+                try
+                {
+                    if (users.TryGetValue(userNumber, out Tuple<IUser, IBroker> tuple))
+                        tuple.Item2.SendMessageToUser(userNumber, message, tuple.Item1);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
             }
         }
 
         public void Unregister(int userNumber)
         {
-            if(!users.TryRemove(userNumber, out IBroker broker))
+            if(!users.TryRemove(userNumber, out Tuple<IUser, IBroker> tuple))
                 throw new ArgumentException($"User with number: {userNumber} does not exist.");
         }
 
@@ -57,7 +63,14 @@ namespace CentralManagerImpl
                 throw new ArgumentException($"The user with number {userNumber} does not exist.");
             if(groupNames.TryGetValue(groupName, out IBroker broker))
             {
-                broker.AddUserToGroup(adderMember, userNumber, groupName);
+                try
+                {
+                    broker.AddUserToGroup(adderMember, userNumber, groupName);
+                }
+                catch(Exception)
+                {
+                    throw;
+                }
             }
         }
 

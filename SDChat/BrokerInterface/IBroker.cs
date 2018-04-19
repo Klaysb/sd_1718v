@@ -43,8 +43,16 @@ namespace BrokerInterface
         /// </summary>
         /// <param name="destUserNumber">The identifier of the receiver.</param>
         /// <param name="message">The message to be sent.</param>
-        /// <param name="srcUserNumber">The user that sends this message.</param>
+        /// <param name="srcUserNumber">The identifier of user that sends this message.</param>
         void SendMessageToUser(int destUserNumber, string message, int srcUserNumber);
+
+        /// <summary>
+        /// Sends a message to a user.
+        /// </summary>
+        /// <param name="destUserNumber">The identifier of the receiver.</param>
+        /// <param name="message">The message to be sent.</param>
+        /// <param name="srcUser">The user that sends this message.</param>
+        void SendMessageToUser(int destUserNumber, string message, IUser srcUser);
 
         /// <summary>
         /// Sends a message to a group.
@@ -53,5 +61,6 @@ namespace BrokerInterface
         /// <param name="message">The message to be sent.</param>
         /// <param name="srcUserNumber">The user that sends this message.</param>
         void SendMessageToGroup(string groupName, string message, int srcUserNumber);
+
     }
 }

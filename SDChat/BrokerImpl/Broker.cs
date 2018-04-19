@@ -5,7 +5,6 @@ using CentralManagerInterface;
 using System;
 using System.Collections.Concurrent;
 using System.Linq;
-using System.Runtime.Remoting;
 
 namespace BrokerImpl
 {
@@ -54,14 +53,14 @@ namespace BrokerImpl
         {
             try
             {
-                manager.Register(user.GetUserNumber(), this);
+                manager.Register(user.GetUserNumber(), user, this);
                 users.TryAdd(user.GetUserNumber(), user);
             }
             catch (ArgumentException)
             {
                 throw;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new Exception("Cannot connect to server.");
             }
@@ -96,7 +95,7 @@ namespace BrokerImpl
                 bool exceptionOccurred = false;
                 group.UsersInSameRegion.Keys.ToList().ForEach(userNumber =>
                 {
-                    if (users.TryGetValue(userNumber, out IUser user))
+                    if (userNumber != srcUserNumber && users.TryGetValue(userNumber, out IUser user))
                     {
                         try
                         {
@@ -124,7 +123,6 @@ namespace BrokerImpl
 
         public void SendMessageToUser(int destUserNumber, string message, int srcUserNumber)
         {
-            CheckIfRegistered(srcUserNumber);
             users.TryGetValue(srcUserNumber, out IUser srcUser);
             try
             {
@@ -137,7 +135,7 @@ namespace BrokerImpl
                     manager.SendMessageToUsers(message, srcUserNumber, destUserNumber);
                 }
             }
-            catch (Exception ex) { throw new Exception("Could not send message to user"); }
+            catch (Exception) { throw new Exception("Could not send message to user."); }
         }
 
         public void Unregister(int userNumber)
@@ -189,7 +187,23 @@ namespace BrokerImpl
         private void CheckIfRegistered(int userNumber)
         {
             if (!users.ContainsKey(userNumber))
-                throw new ArgumentException($"User with number {userNumber} is not registered");
+                throw new ArgumentException($"User with number {userNumber} is not registered.");
+        }
+
+        public void SendMessageToUser(int destUserNumber, string message, IUser srcUser)
+        {
+            try
+            {
+                if (users.TryGetValue(destUserNumber, out IUser user))
+                {
+                    user.AcceptMessage(message, srcUser);
+                }
+                else
+                {
+                    throw new Exception("The user is not available.");
+                }
+            }
+            catch (Exception) { throw new Exception("Could not send message to user."); }
         }
     }
 }

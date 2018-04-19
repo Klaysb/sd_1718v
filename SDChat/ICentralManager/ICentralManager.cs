@@ -1,4 +1,6 @@
 ﻿using BrokerInterface;
+using System;
+using UserInterface;
 
 namespace CentralManagerInterface
 {
@@ -8,8 +10,9 @@ namespace CentralManagerInterface
         /// Register a user in the central manager.
         /// </summary>
         /// <param name="userNumber">The identifier to be registered in the central manager.</param>
-        /// <param name="broker">Broker to which the user will belong.</param>
-        void Register(int userNumber, IBroker broker);
+        /// <param name="user">The user will belong.</param>
+        /// <param name="broker">The broker will belong.</param>
+        void Register(int userNumber, IUser user, IBroker broker);
 
         /// <summary>
         /// Unregister the user from central manager.
