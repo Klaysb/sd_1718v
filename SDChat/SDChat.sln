@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserFormImpl", "UserFormImp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrokerInterface", "BrokerInterface\BrokerInterface.csproj", "{7D7169A1-739B-49A9-8312-450BB13BDB44}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrokerServer", "BrokerServer\BrokerServer.csproj", "{9DE9A89F-F8F4-4B9D-87EE-395278DFE7EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CentralManagerServer", "CentralManagerServer\CentralManagerServer.csproj", "{2D0F6431-218D-48E7-BB5E-28E9EFB8FF7B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +55,14 @@ Global
 		{7D7169A1-739B-49A9-8312-450BB13BDB44}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D7169A1-739B-49A9-8312-450BB13BDB44}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D7169A1-739B-49A9-8312-450BB13BDB44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DE9A89F-F8F4-4B9D-87EE-395278DFE7EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DE9A89F-F8F4-4B9D-87EE-395278DFE7EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DE9A89F-F8F4-4B9D-87EE-395278DFE7EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DE9A89F-F8F4-4B9D-87EE-395278DFE7EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D0F6431-218D-48E7-BB5E-28E9EFB8FF7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D0F6431-218D-48E7-BB5E-28E9EFB8FF7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D0F6431-218D-48E7-BB5E-28E9EFB8FF7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D0F6431-218D-48E7-BB5E-28E9EFB8FF7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

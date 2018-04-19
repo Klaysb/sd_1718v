@@ -4,6 +4,8 @@ namespace BrokerInterface
 {
     public interface IBroker
     {
+        ICentralManager Manager { get; set; }
+
         /// <summary>
         /// Register a user in some region.
         /// </summary>
