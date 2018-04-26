@@ -104,11 +104,11 @@ namespace UserFormImpl
 
         private void PutTextByCallBack(string txt)
         {
-            if (this.InvokeRequired)
+            if (InvokeRequired)
             {
-                Action<string> action = new Action<string>(this.PutTextByCallBack);
+                Action<string> action = new Action<string>(PutTextByCallBack);
                 object[] args = new object[] { txt };
-                this.Invoke(action, args);
+                Invoke(action, args);
             }
             else outputTextBox.AppendText(txt);
         }
@@ -126,7 +126,7 @@ namespace UserFormImpl
             try
             {
                 broker = (IBroker)Activator.GetObject(entry.ObjectType, entry.ObjectUrl);
-                IUser user = new User(UserNumber, UserName, this.PutTextByCallBack);
+                IUser user = new User(UserNumber, UserName, PutTextByCallBack);
                 broker.Register(user);
             }
             catch (Exception ex)
@@ -162,7 +162,7 @@ namespace UserFormImpl
                     MessageBox.Show("The group name is empty.");
                     return;
                 }
-                broker.AddUserToGroup(UserNumber, newMember, groupName);
+                // broker.AddUserToGroup(UserNumber, newMember, groupName);
             }
             catch (Exception ex)
             {

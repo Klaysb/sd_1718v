@@ -1,9 +1,7 @@
 ﻿using BrokerImpl;
-using BrokerInterface;
 using CentralManagerInterface;
 using System;
 using System.Runtime.Remoting;
-using System.Runtime.Remoting.Channels;
 
 namespace BrokerServer
 {
@@ -32,8 +30,7 @@ namespace BrokerServer
 
             var central = (ICentralManager) Activator.GetObject(clients[0].ObjectType, clients[0].ObjectUrl);
             var broker = new Broker(central);
-            //var channels = ChannelServices.RegisteredChannels;
-            ObjRef objrefWellKnown = RemotingServices.Marshal((MarshalByRefObject)broker, services[0].ObjectUri);
+            ObjRef objrefWellKnown = RemotingServices.Marshal(broker, services[0].ObjectUri);
 
             Console.WriteLine("Início do Server Broker.\n Espera de pedidos");
             Console.ReadLine();

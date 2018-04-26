@@ -53,10 +53,6 @@
       <Project>{2D59B94E-AEEF-4F3C-B42D-CF72AD713849}</Project>
       <Name>BrokerImpl</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BrokerInterface\BrokerInterface.csproj">
-      <Project>{7D7169A1-739B-49A9-8312-450BB13BDB44}</Project>
-      <Name>BrokerInterface</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ICentralManager\CentralManagerInterface.csproj">
       <Project>{24F88940-A2AB-4519-A124-6BE407685336}</Project>
       <Name>CentralManagerInterface</Name>

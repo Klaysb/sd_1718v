@@ -1,4 +1,6 @@
-﻿namespace UserInterface
+﻿using MessageImpl;
+
+namespace UserInterface
 {
     public interface IUser
     {
@@ -15,8 +17,7 @@
         /// <summary>
         /// Accept message from other users.
         /// </summary>
-        /// <param name="message">The received message.</param>
-        /// <param name="sender">The user that sends this message.</param>
-        void AcceptMessage(string message, IUser sender);
+        /// <param name="message">The object representing the message.</param>
+        void AcceptMessage(Message message);
     }
 }

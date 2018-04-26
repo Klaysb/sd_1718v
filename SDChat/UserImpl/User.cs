@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MessageImpl;
+using System;
 using UserInterface;
 
 namespace UserImpl
 {
     public class User : MarshalByRefObject, IUser
     {
-        private int userNumber;
-        private string userName;
-        private Action<string> action;
+        private readonly int userNumber;
+        private readonly string userName;
+        private readonly Action<string> action;
 
         public User(int userNumber, string userName, Action<string> action)
         {
@@ -20,10 +17,10 @@ namespace UserImpl
             this.action = action;
         }
 
-        public void AcceptMessage(string message, IUser sender)
+        public void AcceptMessage(Message message)
         {
-            string senderId = sender.GetUserName() ?? sender.GetUserNumber().ToString();
-            string msg = $"{senderId}: {message}\n";
+            string senderId = message.SenderName ?? message.SenderNumber.ToString();
+            string msg = $"{senderId}: {message.Msg}\n";
             action(msg);
         }
 

@@ -44,6 +44,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Message\MessageImpl.csproj">
+      <Project>{56006E2B-C4B5-45E5-9E59-472C48AA0A03}</Project>
+      <Name>MessageImpl</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UserInterface\UserInterface.csproj">
       <Project>{478227E8-EE87-4BFB-9B94-05A55AB45D5A}</Project>
       <Name>UserInterface</Name>

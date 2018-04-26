@@ -49,6 +49,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BrokerInterface\BrokerInterface.csproj">
+      <Project>{7D7169A1-739B-49A9-8312-450BB13BDB44}</Project>
+      <Name>BrokerInterface</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CentralManagerImpl\CentralManagerImpl.csproj">
       <Project>{8161dc50-875f-4936-8b12-fdd089c43220}</Project>
       <Name>CentralManagerImpl</Name>

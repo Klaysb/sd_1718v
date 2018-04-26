@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{478227E8-EE87-4BFB-9B94-05A55AB45D5A}</ProjectGuid>
+    <ProjectGuid>{56006E2B-C4B5-45E5-9E59-472C48AA0A03}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UserInterface</RootNamespace>
-    <AssemblyName>UserInterface</AssemblyName>
+    <RootNamespace>MessageImpl</RootNamespace>
+    <AssemblyName>MessageImpl</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,14 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IUser.cs" />
+    <Compile Include="Message.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Message\MessageImpl.csproj">
-      <Project>{56006E2B-C4B5-45E5-9E59-472C48AA0A03}</Project>
-      <Name>MessageImpl</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

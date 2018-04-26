@@ -4,204 +4,19 @@ using UserInterface;
 using CentralManagerInterface;
 using System;
 using System.Collections.Concurrent;
-using System.Linq;
+using System.Collections.Generic;
+using MessageImpl;
 
 namespace BrokerImpl
 {
     public class Broker : MarshalByRefObject, IBroker
     {
 
-        private ICentralManager manager;
+        private readonly ICentralManager manager;
         private readonly ConcurrentDictionary<int, IUser> users = new ConcurrentDictionary<int, IUser>();
-        private readonly ConcurrentDictionary<string, Group> groupNames = new ConcurrentDictionary<string, Group>();
+        private readonly ConcurrentDictionary<string, Tuple<Group, List<int>>> groupNames = new ConcurrentDictionary<string, Tuple<Group, List<int>>>();
 
         public Broker(ICentralManager manager) => this.manager = manager;
-
-        public void AddUserToGroup(int adderMember, int userNumber, string groupName)
-        {
-            if(groupNames.TryGetValue(groupName, out Group group))
-            {
-                if (group.UsersInSameRegion.ContainsKey(adderMember))
-                {
-                    try
-                    {
-                        var members = group.UsersInAnotherRegion.Keys.Concat(group.UsersInSameRegion.Keys).ToArray();
-                        if (users.ContainsKey(userNumber))
-                        {
-                            group.UsersInSameRegion.TryAdd(userNumber, userNumber);
-                            if (group.UsersInAnotherRegion.Count != 0)
-                                manager.AddUserToGroup(group.Owner, adderMember, userNumber, groupName, members);
-                        }
-                        else
-                        {
-                            manager.AddUserToGroup(group.Owner, adderMember, userNumber, groupName, members);
-                            group.UsersInAnotherRegion.TryAdd(userNumber, userNumber);
-                        }
-                    }
-                    catch (ArgumentException)
-                    {
-                        throw;
-                    }
-                    catch (Exception)
-                    {
-                        throw new Exception("Cannot connect to server.");
-                    }
-                }
-                else throw new ArgumentException($"The user with the number {adderMember} is not part of the group");
-            }
-            else throw new ArgumentException($"The group {groupName} does not exist."); 
-        }
-
-        public void AddUserToGroup(int owner, int userNumber, string groupName, int[] userNumbers)
-        {
-            Group group = null;
-            if (!groupNames.TryGetValue(groupName, out group))
-            {
-                group = new Group(owner, groupName);
-                groupNames.TryAdd(groupName, group);
-                foreach (int curr in userNumbers)
-                    group.UsersInAnotherRegion.TryAdd(curr, curr);
-            }
-            if (users.ContainsKey(userNumber))
-                group.UsersInSameRegion.TryAdd(userNumber, userNumber);
-            else
-                group.UsersInAnotherRegion.TryAdd(userNumber, userNumber);
-        }
-
-        public void Register(IUser user)
-        {
-            try
-            {
-                manager.Register(user.GetUserNumber(), user, this);
-                users.TryAdd(user.GetUserNumber(), user);
-            }
-            catch (ArgumentException)
-            {
-                throw;
-            }
-            catch (Exception)
-            {
-                throw new Exception("Cannot connect to server.");
-            }
-        }
-
-        public void RegisterGroup(int userNumber, string groupName)
-        {
-            try
-            {
-                CheckIfRegistered(userNumber);
-                manager.RegisterGroup(groupName, this);
-                var group = new Group(userNumber, groupName);
-                group.UsersInSameRegion.TryAdd(userNumber, userNumber);
-                groupNames.TryAdd(groupName, group);
-            }
-            catch (ArgumentException)
-            {
-                throw;
-            }
-            catch (Exception)
-            {
-                throw new Exception("Cannot connect to server.");
-            }
-        }
-
-        public void SendMessageToGroup(string groupName, string message, int srcUserNumber)
-        {
-            CheckIfRegistered(srcUserNumber);
-            if (groupNames.TryGetValue(groupName, out Group group))
-            {
-                users.TryGetValue(srcUserNumber, out IUser srcUser);
-                bool exceptionOccurred = false;
-                group.UsersInSameRegion.Keys.ToList().ForEach(userNumber =>
-                {
-                    if (userNumber != srcUserNumber && users.TryGetValue(userNumber, out IUser user))
-                    {
-                        try
-                        {
-                            user.AcceptMessage(message, srcUser);
-                        }
-                        catch (Exception)
-                        {
-                            exceptionOccurred = true;
-                        }
-                    }
-                });
-                try
-                {
-                    manager.SendMessageToUsers(message, srcUserNumber, group.UsersInAnotherRegion.Keys.ToArray());
-                }
-                catch (Exception)
-                {
-                    throw new Exception("Could not send message to users outside of your region.");
-                }
-
-                if (exceptionOccurred) throw new Exception("Could not send message to all users.");
-            }
-            else throw new ArgumentException($"The group {groupName} does not exist.");
-        }
-
-        public void SendMessageToUser(int destUserNumber, string message, int srcUserNumber)
-        {
-            users.TryGetValue(srcUserNumber, out IUser srcUser);
-            try
-            {
-                if (users.TryGetValue(destUserNumber, out IUser user))
-                {
-                    user.AcceptMessage(message, srcUser);
-                }
-                else
-                {
-                    manager.SendMessageToUsers(message, srcUserNumber, destUserNumber);
-                }
-            }
-            catch (Exception) { throw new Exception("Could not send message to user."); }
-        }
-
-        public void Unregister(int userNumber)
-        {
-            CheckIfRegistered(userNumber);
-            try
-            {
-                manager.Unregister(userNumber);
-                users.TryRemove(userNumber, out IUser user);
-            }
-            catch (ArgumentException)
-            {
-                throw;
-            }
-            catch(Exception)
-            {
-                throw new Exception("Cannot connect to server.");
-            }
-        }
-
-        public void UnregisterGroup(string groupName, int userNumber)
-        {
-            CheckIfRegistered(userNumber);
-            if(!groupNames.TryGetValue(groupName, out Group group))
-            {
-                throw new ArgumentException($"Group with name {groupName} does not exist.");
-            }
-
-            if(group.Owner != userNumber)
-            {
-                throw new ArgumentException("You do not have permission to delete this group.");
-            }
-            
-            try
-            {
-                manager.UnregisterGroup(groupName);
-                groupNames.TryRemove(groupName, out Group g);
-            }
-            catch(ArgumentException)
-            {
-                throw;
-            }
-            catch(Exception)
-            {
-                throw new Exception("Cannot connect to server.");
-            }
-        }
 
         private void CheckIfRegistered(int userNumber)
         {
@@ -209,20 +24,140 @@ namespace BrokerImpl
                 throw new ArgumentException($"User with number {userNumber} is not registered.");
         }
 
-        public void SendMessageToUser(int destUserNumber, string message, IUser srcUser)
+        /****************************************************************************************************************
+         *                                        Methods called by the manager                                         /
+         *                                                                                                              /
+         * **************************************************************************************************************/
+
+        public void RegisterGroup(Group group)
         {
+            var groupName = group.Name;
+            var tuple = new Tuple<Group, List<int>>(group, new List<int>());
+            groupNames.TryAdd(groupName, tuple);
+        }
+
+        public void SendMessageToUser(int receiver, Message message)
+        {
+            if (users.TryGetValue(receiver, out IUser user))
+                user.AcceptMessage(message);
+        }
+
+        public void SendMessageToGroup(string groupName, Message message)
+        {
+            if (groupNames.TryGetValue(groupName, out Tuple<Group, List<int>> tuple))
+                tuple.Item2.ForEach(userNumber => SendMessageToUser(userNumber, message));
+        }
+
+        public void UnregisterGroup(string groupName)
+        {
+            groupNames.TryRemove(groupName, out Tuple<Group, List<int>> tuple);
+        }
+
+        /****************************************************************************************************************
+         *                                        Methods called by the user                                            /
+         *                                                                                                              /
+         * **************************************************************************************************************/
+
+        public void Register(IUser user)
+        {
+            if (!users.TryAdd(user.GetUserNumber(), user))
+                throw new ArgumentException("A user with the same number has already been registered.");
+        }
+
+        public void RegisterGroup(int userNumber, string groupName)
+        {
+            CheckIfRegistered(userNumber);
+            var group = new Group(userNumber, groupName);
+            var list = new List<int> { userNumber };
+            var tuple = new Tuple<Group, List<int>>(group, list);
+            if (!groupNames.TryAdd(groupName, tuple))
+                throw new ArgumentException("A group with the same name has already been registered.");
             try
             {
-                if (users.TryGetValue(destUserNumber, out IUser user))
+                manager.RegisterGroup(group, this);
+            }
+            catch (Exception)
+            {
+                // The user must not know about any erros related to the central manager.
+            }
+        }
+
+        public void SendMessageToUser(int destUserNumber, string message, int srcUserNumber)
+        {
+            CheckIfRegistered(srcUserNumber);
+            var userName = users[srcUserNumber].GetUserName();
+            var msg = new Message
+            {
+                Msg = message,
+                SenderName = userName,
+                SenderNumber = srcUserNumber
+            };
+            if (users.TryGetValue(destUserNumber, out IUser user))
+            {
+                try
                 {
-                    user.AcceptMessage(message, srcUser);
+                    user.AcceptMessage(msg);
+                    return;
                 }
-                else
+                catch (Exception)
                 {
-                    throw new Exception("The user is not available.");
+                    throw new Exception("Could not send message to user.");
                 }
             }
-            catch (Exception) { throw new Exception("Could not send message to user."); }
+            try
+            {
+                manager.SendMessageToBrokers(destUserNumber, msg, this);
+            }
+            catch (Exception)
+            {
+                // The user must not know about any erros related to the central manager.
+            }
+        }
+
+        public void SendMessageToGroup(string groupName, string message, int srcUserNumber)
+        {
+            CheckIfRegistered(srcUserNumber);
+            if (!groupNames.TryGetValue(groupName, out Tuple<Group, List<int>> tuple))
+                throw new ArgumentException("The group does not exist.");
+            var userName = users[srcUserNumber].GetUserName();
+            var msg = new Message
+            {
+                Msg = message,
+                SenderName = userName,
+                SenderNumber = srcUserNumber
+            };
+            try
+            {
+                manager.SendMessageToGroup(groupName, msg, this);
+            }
+            catch (Exception)
+            {
+                // The user must not know about any erros related to the central manager.
+            }
+        }
+
+        public void Unregister(int userNumber)
+        {
+            CheckIfRegistered(userNumber);
+            users.TryRemove(userNumber, out IUser user);
+        }
+
+        public void UnregisterGroup(string groupName, int userNumber)
+        {
+            CheckIfRegistered(userNumber);
+            if (!groupNames.TryGetValue(groupName, out Tuple<Group, List<int>> tuple))
+                throw new ArgumentException($"The group that you specified does not exist.");
+            if (tuple.Item1.Owner != userNumber)
+                throw new ArgumentException("You do not have permission to delete this group.");
+            groupNames.TryRemove(groupName, out Tuple<Group, List<int>> t);
+            try
+            {
+                manager.UnregisterGroup(groupName, this);
+            }
+            catch (Exception)
+            {
+                // The user must not know about any erros related to the central manager.
+            }
         }
     }
 }
