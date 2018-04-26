@@ -36,6 +36,15 @@ namespace BrokerImpl
             groupNames.TryAdd(groupName, tuple);
         }
 
+        public void AddUserToGroup(string groupName, int destNumber)
+        {
+            if (!users.TryGetValue(destNumber, out IUser user)) return;
+            if(groupNames.TryGetValue(groupName, out Tuple<Group, List<int>> tuple))
+            {
+                tuple.Item2.Add(destNumber);
+            }
+        }
+
         public void SendMessageToUser(int receiver, Message message)
         {
             if (users.TryGetValue(receiver, out IUser user))
@@ -79,6 +88,30 @@ namespace BrokerImpl
             catch (Exception)
             {
                 // The user must not know about any erros related to the central manager.
+            }
+        }
+
+        public void AddUserToGroup(string groupName, int destNumber, int srcNumber)
+        {
+            CheckIfRegistered(srcNumber);
+            if (!groupNames.TryGetValue(groupName, out Tuple<Group, List<int>> tuple))
+                throw new ArgumentException("The group does not exist.");
+            if (!tuple.Item2.Contains(srcNumber))
+                throw new ArgumentException("The user does not belong to this group.");
+            if(tuple.Item2.Contains(destNumber))
+                throw new ArgumentException("The user already belongs to this group.");
+            if(users.TryGetValue(destNumber, out IUser user))
+            {
+                tuple.Item2.Add(destNumber);
+                return;
+            }
+            try
+            {
+                manager.AddUserToGroup(groupName, destNumber, this);
+            }
+            catch(Exception)
+            {
+
             }
         }
 
@@ -126,6 +159,19 @@ namespace BrokerImpl
                 SenderName = userName,
                 SenderNumber = srcUserNumber
             };
+            foreach(var num in tuple.Item2)
+            {
+                try
+                {
+                    if (num != srcUserNumber && users.TryGetValue(num, out IUser user))
+                        user.AcceptMessage(msg);
+                }
+                catch (Exception)
+                {
+                    //
+                }
+                
+            }
             try
             {
                 manager.SendMessageToGroup(groupName, msg, this);

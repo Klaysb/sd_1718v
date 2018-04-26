@@ -18,6 +18,13 @@ namespace BrokerInterface
         void RegisterGroup(Group group);
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="groupName"></param>
+        /// <param name="destNumber"></param>
+        void AddUserToGroup(string groupName, int destNumber);
+
+        /// <summary>
         /// Sends a message to a user.
         /// </summary>
         /// <param name="receiver">The identifier of the receiving user.</param>
@@ -54,6 +61,14 @@ namespace BrokerInterface
         /// <param name="userNumber">The identifier of the group's creator.</param>
         /// <param name="groupName">Name of the group.</param>
         void RegisterGroup(int userNumber, string groupName);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="groupName"></param>
+        /// <param name="destNumber"></param>
+        /// <param name="srcNumber"></param>
+        void AddUserToGroup(string groupName, int destNumber, int srcNumber);
 
         /// <summary>
         /// Sends a message to a user.

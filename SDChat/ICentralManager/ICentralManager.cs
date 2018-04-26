@@ -14,11 +14,12 @@ namespace CentralManagerInterface
         void RegisterGroup(Group group, IBroker callerBroker);
 
         /// <summary>
-        /// Unregister a group.
+        /// Add user to a group.
         /// </summary>
         /// <param name="groupName">The identifier of the group.</param>
+        /// <param name="destNumber">The identifier of the user to be added.</param>
         /// <param name="callerBroker">The broker that calls this method.</param>
-        void UnregisterGroup(string groupName, IBroker callerBroker);
+        void AddUserToGroup(string groupName, int destNumber, IBroker callerBroker);
 
         /// <summary>
         /// Sends a message to users.
@@ -35,5 +36,12 @@ namespace CentralManagerInterface
         /// <param name="message">The message to be sent.</param>
         /// <param name="callerBroker">The broker that calls this method.</param>
         void SendMessageToGroup(string groupName, Message message, IBroker callerBroker);
+
+        /// <summary>
+        /// Unregister a group.
+        /// </summary>
+        /// <param name="groupName">The identifier of the group.</param>
+        /// <param name="callerBroker">The broker that calls this method.</param>
+        void UnregisterGroup(string groupName, IBroker callerBroker);
     }
 }

@@ -35,14 +35,14 @@ namespace CentralManagerImpl
             }
         }
 
-        public void UnregisterGroup(string groupName, IBroker callerBroker)
+        public void AddUserToGroup(string groupName, int destNumber, IBroker callerBroker)
         {
             foreach (IBroker broker in brokers)
             {
                 try
                 {
                     if (!broker.Equals(callerBroker))
-                        broker.UnregisterGroup(groupName);
+                        broker.AddUserToGroup(groupName, destNumber);
                 }
                 catch (Exception)
                 {
@@ -77,6 +77,23 @@ namespace CentralManagerImpl
                 {
                     if (!broker.Equals(callerBroker))
                         broker.SendMessageToGroup(groupName, message);
+                }
+                catch (Exception)
+                {
+                    // Não é necessário tratar a excecao, porque quem chama 
+                    // o metodo nao tem de ter conhecimento se houve falhas ao conectar com outro broker.
+                }
+            }
+        }
+
+        public void UnregisterGroup(string groupName, IBroker callerBroker)
+        {
+            foreach (IBroker broker in brokers)
+            {
+                try
+                {
+                    if (!broker.Equals(callerBroker))
+                        broker.UnregisterGroup(groupName);
                 }
                 catch (Exception)
                 {

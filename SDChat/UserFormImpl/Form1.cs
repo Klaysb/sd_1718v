@@ -63,9 +63,9 @@ namespace UserFormImpl
                         MessageBox.Show("Cannot send message to yourself.");
                         return;
                     }
-                    broker.SendMessageToUser(destUserNumber, message, UserNumber);
                     outputTextBox.AppendText(senderMsg);
                     inputTextBox.Clear();
+                    broker.SendMessageToUser(destUserNumber, message, UserNumber);
                 }
                 catch (FormatException)
                 {
@@ -87,8 +87,9 @@ namespace UserFormImpl
                 }
                 try
                 {
-                    broker.SendMessageToGroup(groupName, message, UserNumber);
                     outputTextBox.AppendText(senderMsg);
+                    inputTextBox.Clear();
+                    broker.SendMessageToGroup(groupName, message, UserNumber);
                 }
                 catch (Exception ex)
                 {
@@ -162,7 +163,7 @@ namespace UserFormImpl
                     MessageBox.Show("The group name is empty.");
                     return;
                 }
-                // broker.AddUserToGroup(UserNumber, newMember, groupName);
+                broker.AddUserToGroup(groupName, newMember, UserNumber);
             }
             catch (Exception ex)
             {
