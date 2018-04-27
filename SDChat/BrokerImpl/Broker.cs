@@ -41,7 +41,8 @@ namespace BrokerImpl
             if (!users.TryGetValue(destNumber, out IUser user)) return;
             if(groupNames.TryGetValue(groupName, out Tuple<Group, List<int>> tuple))
             {
-                tuple.Item2.Add(destNumber);
+                if (!tuple.Item2.Contains(destNumber))
+                    tuple.Item2.Add(destNumber);
             }
         }
 

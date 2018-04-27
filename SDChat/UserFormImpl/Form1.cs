@@ -11,6 +11,20 @@ namespace UserFormImpl
     public partial class Form1 : Form
     {
         private static readonly string CONFIG_FILE = "UserFormImpl.exe.config";
+        private delegate void DelSendMessageToUser(int destUserNumber, string message, int srcUserNumber);
+        private delegate void DelSendMessageToGroup(string groupName, string message, int srcUserNumber);
+        private delegate void DelRegisterUser(IUser user);
+        private delegate void DelUnregisterUser(int userNumber);
+        private delegate void DelAddUserToGroup(string groupName, int destNumber, int srcNumber);
+        private delegate void DelRegisterGroup(int userNumber, string groupName);
+        private delegate void DelUnregisterGroup(string groupName, int userNumber);
+        private DelSendMessageToUser sendMessageToUser;
+        private DelSendMessageToGroup sendMessageToGroup;
+        private DelRegisterUser registerUser;
+        private DelUnregisterUser unregisterUser;
+        private DelAddUserToGroup addUserToGroup;
+        private DelRegisterGroup registerGroup;
+        private DelUnregisterGroup unregisterGroup;
         private IBroker broker;
 
         public Form1()
@@ -19,6 +33,17 @@ namespace UserFormImpl
             RemotingConfiguration.Configure(CONFIG_FILE, false);
             BuildMenuItems();
             inputTextBox.KeyPress += new KeyPressEventHandler(CheckEnterPress);
+        }
+
+        private void InitializeDelegates()
+        {
+            sendMessageToUser = new DelSendMessageToUser(broker.SendMessageToUser);
+            sendMessageToGroup = new DelSendMessageToGroup(broker.SendMessageToGroup);
+            registerUser = new DelRegisterUser(broker.Register);
+            unregisterUser = new DelUnregisterUser(broker.Unregister);
+            addUserToGroup = new DelAddUserToGroup(broker.AddUserToGroup);
+            registerGroup = new DelRegisterGroup(broker.RegisterGroup);
+            unregisterGroup = new DelUnregisterGroup(broker.UnregisterGroup);
         }
 
         private void BuildMenuItems()
@@ -35,7 +60,6 @@ namespace UserFormImpl
                     Name = entry.TypeName,
                     Tag = entry,
                     Text = config.GetKey(i)
-                    //Click += new EventHandler(MenuItemClickHandler)
                 };
             }
             brokerList.Items.AddRange(items);
@@ -65,7 +89,16 @@ namespace UserFormImpl
                     }
                     outputTextBox.AppendText(senderMsg);
                     inputTextBox.Clear();
-                    broker.SendMessageToUser(destUserNumber, message, UserNumber);
+                    sendMessageToUser.BeginInvoke(destUserNumber, message, UserNumber, ar => {
+                        try
+                        {
+                            sendMessageToUser.EndInvoke(ar);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
+                    }, null);
                 }
                 catch (FormatException)
                 {
@@ -85,18 +118,19 @@ namespace UserFormImpl
                     MessageBox.Show("Please, enter the group name.");
                     return;
                 }
-                try
-                {
-                    outputTextBox.AppendText(senderMsg);
-                    inputTextBox.Clear();
-                    broker.SendMessageToGroup(groupName, message, UserNumber);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
+                outputTextBox.AppendText(senderMsg);
+                inputTextBox.Clear();
+                sendMessageToGroup.BeginInvoke(groupName, message, UserNumber, ar => {
+                    try
+                    {
+                        sendMessageToGroup.EndInvoke(ar);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }, null);
             }
-            receiverTextBox.Clear();
         }
 
         private string UserName => usernameTextBox.Text;
@@ -127,8 +161,20 @@ namespace UserFormImpl
             try
             {
                 broker = (IBroker)Activator.GetObject(entry.ObjectType, entry.ObjectUrl);
+                InitializeDelegates();
                 IUser user = new User(UserNumber, UserName, PutTextByCallBack);
-                broker.Register(user);
+                registerUser.BeginInvoke(user, ar => {
+                    try
+                    {
+                        registerUser.EndInvoke(ar);
+                        MessageBox.Show("Registered with success!");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                        broker = null;
+                    }
+                }, null);
             }
             catch (Exception ex)
             {
@@ -140,15 +186,18 @@ namespace UserFormImpl
         private void unRegisterBtn_Click(object sender, EventArgs e)
         {
             if (broker == null) return;
-            try
-            {
-                broker.Unregister(UserNumber);
-                broker = null;
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            unregisterUser.BeginInvoke(UserNumber, ar => {
+                try
+                {
+                    unregisterUser.EndInvoke(ar);
+                    broker = null;
+                    MessageBox.Show("Unregistered with success!");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }, null);
         }
 
         private void addGroupBtn_Click(object sender, EventArgs e)
@@ -163,7 +212,16 @@ namespace UserFormImpl
                     MessageBox.Show("The group name is empty.");
                     return;
                 }
-                broker.AddUserToGroup(groupName, newMember, UserNumber);
+                addUserToGroup.BeginInvoke(groupName, newMember, UserNumber, ar => {
+                    try
+                    {
+                        addUserToGroup.EndInvoke(ar);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }, null);
             }
             catch (Exception ex)
             {
@@ -180,14 +238,17 @@ namespace UserFormImpl
                 MessageBox.Show("The group name is empty.");
                 return;
             }
-            try
-            {
-                broker.RegisterGroup(UserNumber, groupName);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            registerGroup.BeginInvoke(UserNumber, groupName, ar => {
+                try
+                {
+                    registerGroup.EndInvoke(ar);
+                    MessageBox.Show("Group created with success!");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }, null);
         }
 
         private void removeGroupNameBtn_Click(object sender, EventArgs e)
@@ -199,14 +260,17 @@ namespace UserFormImpl
                 MessageBox.Show("The group name is empty.");
                 return;
             }
-            try
-            {
-                broker.UnregisterGroup(groupName, UserNumber);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            unregisterGroup.BeginInvoke(groupName, UserNumber, ar => {
+                try
+                {
+                    unregisterGroup.EndInvoke(ar);
+                    MessageBox.Show("The group was deleted with success!");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }, null);
         }
     }
 }
