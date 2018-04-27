@@ -13,17 +13,17 @@ O utilizador é cliente do servidor regional. O servidor regional é servidor do
 
 \section{Funcionamento}
 
-Para puder utilizar o sistema, o utilizador deve escolher em qual região pretende-se conectar. Estando este conectado, é possível usufruir das seguintes funcionalidades:
+Para poder utilizar o sistema, o utilizador deve escolher em qual região pretende-se conectar. Estando este conectado, é possível usufruir das seguintes funcionalidades:
 \begin{itemize}
 	\item Enviar mensagens para o utilizador;
 	\item Criar grupos;
 	\item Enviar mensagens para um grupo;
-	\item Trocar de regiões;
+	\item Trocar de região;
 	\item Sair de uma região.
 \end{itemize}
 
 \subsection{Funcionamento entre utilizadores}
-Para um utilizador enviar uma mensagem para outro utilizador da mesma região o processo ocorre apenas no servidor dessa região. Caso o utilizador deseje enviar uma mensagem para outro utilizador fora da sua região, o servidor da região irá comunicar-se com o servidor central dizendo para este tratar de enviar a mensagem para um determinado utilizador que o servidor regional não tem conhecimento. O servidor central irá verificar em qual dos servidores regionais está presente o utilizador que tem de receber a mensagem e enviar a mensagem para esse servidor regional. Por sua vez, o servidor regional trata de entregar a mensagem ao utilizador.
+Para um utilizador enviar uma mensagem para outro utilizador da mesma região o processo ocorre apenas no servidor dessa região. Caso o utilizador deseje enviar uma mensagem para outro utilizador fora da sua região, o servidor da região irá comunicar-se com o servidor central dizendo para este tratar de enviar a mensagem para um determinado utilizador que o servidor regional não tem conhecimento. O servidor central irá enviar a mensagem a todos os servidores regionais que conhece e estes irão verificar se o utilizador encontra-se registado na respetiva região. Em caso afirmativo tratarão de enviar a mensagem para o utilizador pretendente. Em caso negativo, o servidor regional não comunica com nenhum utilizador.
 
 \subsection{Funcionamento em grupo}
-É possível ao utilizador criar grupos dentro de uma região e adicionar outros utilizadores quer estejam na mesma ou em diferentes regiões. Ao adicionar um utilizador de outra região, a informação desse grupo será replicada para essa região e para todas as outras regiões que contenham informação desse grupo. Apenas o criador do grupo tem permissão para eliminar esse grupo. Aos utilizadores que pertencem a um grupo, estes têm permissão para adicionar outros utilizadores. Os utilizadores que pertencem a um grupo nunca podem sair desse grupo, só sairão quando o criador apagar o grupo.
+É possível ao utilizador criar grupos dentro de uma região e adicionar outros utilizadores quer estejam na mesma ou em diferentes regiões. A existência do grupo é replicada por todos os outros servidores regionais. Ao adicionar um utilizador de outra região, o servidor regional envia a informação ao servidor central, que por sua vez envia aos outros servidores regionais até que a região onde se encontra o utilizador receba a mensagem e o adiciona ao grupo. Aos utilizadores que pertençam a um grupo, estes têm permissão para adicionar outros utilizadores. Os utilizadores que pertencem a um grupo nunca podem sair desse grupo, só sairão quando o criador apagar o grupo.
