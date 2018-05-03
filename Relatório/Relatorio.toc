@@ -1,0 +1,15 @@
+\babel@toc {portuguese}{}
+\contentsline {chapter}{\numberline {1}Introdu\IeC {\c c}\IeC {\~a}o}{3}
+\contentsline {chapter}{\numberline {2}Descri\IeC {\c c}\IeC {\~a}o do Problema}{4}
+\contentsline {chapter}{\numberline {3}Requisitos}{5}
+\contentsline {section}{\numberline {3.1}Funcionais}{5}
+\contentsline {section}{\numberline {3.2}N\IeC {\~a}o Funcionais}{5}
+\contentsline {chapter}{\numberline {4}Arquitetura}{6}
+\contentsline {section}{\numberline {4.1}Intera\IeC {\c c}\IeC {\~a}o entre as partes}{6}
+\contentsline {section}{\numberline {4.2}Funcionamento}{6}
+\contentsline {subsection}{\numberline {4.2.1}Funcionamento entre utilizadores}{7}
+\contentsline {subsection}{\numberline {4.2.2}Funcionamento em grupo}{7}
+\contentsline {chapter}{\numberline {5}Implementa\IeC {\c c}\IeC {\~a}o}{8}
+\contentsline {section}{\numberline {5.1}Central Manager}{8}
+\contentsline {chapter}{\numberline {6}Toler\IeC {\^a}ncia a Falhas}{10}
+\contentsline {chapter}{\numberline {7}Manual de utiliza\IeC {\c c}\IeC {\~a}o}{11}
