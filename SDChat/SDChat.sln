@@ -15,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserInterface", "UserInterf
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserFormImpl", "UserFormImpl\UserFormImpl.csproj", "{09319583-DC65-4EA9-B116-5D2BC601B933}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrokerInterface", "BrokerInterface\BrokerInterface.csproj", "{7D7169A1-739B-49A9-8312-450BB13BDB44}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrokerServer", "BrokerServer\BrokerServer.csproj", "{9DE9A89F-F8F4-4B9D-87EE-395278DFE7EE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CentralManagerServer", "CentralManagerServer\CentralManagerServer.csproj", "{2D0F6431-218D-48E7-BB5E-28E9EFB8FF7B}"
@@ -24,6 +22,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserImpl", "UserImpl\UserImpl.csproj", "{18EE5611-523E-42FF-84BA-E421F91CE75A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageImpl", "Message\MessageImpl.csproj", "{56006E2B-C4B5-45E5-9E59-472C48AA0A03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrokerServiceInterface", "BrokerServiceInterface\BrokerServiceInterface.csproj", "{70C539B0-945F-4805-B56F-EE6DF29D5551}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrokerClientInterface", "BrokerClientInterface\BrokerClientInterface.csproj", "{5E49EEB2-E58C-4730-9A9A-00A9F3203958}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,10 +57,6 @@ Global
 		{09319583-DC65-4EA9-B116-5D2BC601B933}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09319583-DC65-4EA9-B116-5D2BC601B933}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09319583-DC65-4EA9-B116-5D2BC601B933}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7D7169A1-739B-49A9-8312-450BB13BDB44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7D7169A1-739B-49A9-8312-450BB13BDB44}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7D7169A1-739B-49A9-8312-450BB13BDB44}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7D7169A1-739B-49A9-8312-450BB13BDB44}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9DE9A89F-F8F4-4B9D-87EE-395278DFE7EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9DE9A89F-F8F4-4B9D-87EE-395278DFE7EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DE9A89F-F8F4-4B9D-87EE-395278DFE7EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -75,6 +73,14 @@ Global
 		{56006E2B-C4B5-45E5-9E59-472C48AA0A03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56006E2B-C4B5-45E5-9E59-472C48AA0A03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56006E2B-C4B5-45E5-9E59-472C48AA0A03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70C539B0-945F-4805-B56F-EE6DF29D5551}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70C539B0-945F-4805-B56F-EE6DF29D5551}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70C539B0-945F-4805-B56F-EE6DF29D5551}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70C539B0-945F-4805-B56F-EE6DF29D5551}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E49EEB2-E58C-4730-9A9A-00A9F3203958}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E49EEB2-E58C-4730-9A9A-00A9F3203958}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E49EEB2-E58C-4730-9A9A-00A9F3203958}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E49EEB2-E58C-4730-9A9A-00A9F3203958}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

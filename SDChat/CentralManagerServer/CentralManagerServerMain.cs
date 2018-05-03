@@ -1,4 +1,4 @@
-﻿using BrokerInterface;
+﻿using BrokerClientInterface;
 using CentralManagerImpl;
 using System;
 using System.Collections.Generic;
@@ -24,11 +24,11 @@ namespace CentralManagerServer
             var config = ConfigurationSettings.AppSettings;
             var type = config["type"];
             var assembly = config["assembly"];
-            var brokers = new List<IBroker>();
+            var brokers = new List<IBrokerClient>();
             for (int i = 2; i < config.Count; i++)
             {
                 WellKnownClientTypeEntry entry = new WellKnownClientTypeEntry(type, assembly, config[i]);
-                brokers.Add((IBroker)Activator.GetObject(entry.ObjectType, entry.ObjectUrl));
+                brokers.Add((IBrokerClient)Activator.GetObject(entry.ObjectType, entry.ObjectUrl));
             }
             var central = new CentralManager(brokers);
             ObjRef objrefWellKnown = RemotingServices.Marshal(central, services[0].ObjectUri);

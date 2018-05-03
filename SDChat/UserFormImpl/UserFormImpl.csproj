@@ -81,9 +81,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BrokerInterface\BrokerInterface.csproj">
-      <Project>{7D7169A1-739B-49A9-8312-450BB13BDB44}</Project>
-      <Name>BrokerInterface</Name>
+    <ProjectReference Include="..\BrokerServiceInterface\BrokerServiceInterface.csproj">
+      <Project>{70C539B0-945F-4805-B56F-EE6DF29D5551}</Project>
+      <Name>BrokerServiceInterface</Name>
     </ProjectReference>
     <ProjectReference Include="..\UserImpl\UserImpl.csproj">
       <Project>{18EE5611-523E-42FF-84BA-E421F91CE75A}</Project>

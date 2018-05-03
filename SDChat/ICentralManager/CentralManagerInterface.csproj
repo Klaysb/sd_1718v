@@ -44,9 +44,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BrokerInterface\BrokerInterface.csproj">
-      <Project>{7D7169A1-739B-49A9-8312-450BB13BDB44}</Project>
-      <Name>BrokerInterface</Name>
+    <ProjectReference Include="..\BrokerClientInterface\BrokerClientInterface.csproj">
+      <Project>{5E49EEB2-E58C-4730-9A9A-00A9F3203958}</Project>
+      <Name>BrokerClientInterface</Name>
     </ProjectReference>
     <ProjectReference Include="..\GroupImpl\GroupImpl.csproj">
       <Project>{DB9450EC-AE45-4C75-AB6B-8589D51F605F}</Project>

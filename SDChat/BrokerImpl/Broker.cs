@@ -1,15 +1,16 @@
 ﻿using GroupImpl;
-using BrokerInterface;
 using UserInterface;
 using CentralManagerInterface;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using MessageImpl;
+using BrokerClientInterface;
+using BrokerServiceInterface;
 
 namespace BrokerImpl
 {
-    public class Broker : MarshalByRefObject, IBroker
+    public class Broker : MarshalByRefObject, IBrokerClient, IBrokerService
     {
 
         private readonly ICentralManager manager;
@@ -24,10 +25,10 @@ namespace BrokerImpl
                 throw new ArgumentException($"User with number {userNumber} is not registered.");
         }
 
-        /****************************************************************************************************************
-         *                                        Methods called by the manager                                         /
-         *                                                                                                              /
-         * **************************************************************************************************************/
+        /****************************************************************************************************************/
+        /*                                        Methods called by the manager                                          /
+        /*                                                                                                               /
+        /****************************************************************************************************************/
 
         public void RegisterGroup(Group group)
         {
@@ -63,10 +64,10 @@ namespace BrokerImpl
             groupNames.TryRemove(groupName, out Tuple<Group, List<int>> tuple);
         }
 
-        /****************************************************************************************************************
-         *                                        Methods called by the user                                            /
-         *                                                                                                              /
-         * **************************************************************************************************************/
+        /****************************************************************************************************************/
+        /*                                        Methods called by the user                                             /
+        /*                                                                                                               /
+        /****************************************************************************************************************/
 
         public void Register(IUser user)
         {

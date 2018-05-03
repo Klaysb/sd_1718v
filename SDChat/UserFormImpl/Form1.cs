@@ -1,4 +1,4 @@
-﻿using BrokerInterface;
+﻿using BrokerServiceInterface;
 using System;
 using System.Configuration;
 using System.Runtime.Remoting;
@@ -25,7 +25,7 @@ namespace UserFormImpl
         private DelAddUserToGroup addUserToGroup;
         private DelRegisterGroup registerGroup;
         private DelUnregisterGroup unregisterGroup;
-        private IBroker broker;
+        private IBrokerService broker;
 
         public Form1()
         {
@@ -160,7 +160,7 @@ namespace UserFormImpl
             var entry = item.Tag as WellKnownClientTypeEntry;
             try
             {
-                broker = (IBroker)Activator.GetObject(entry.ObjectType, entry.ObjectUrl);
+                broker = (IBrokerService) Activator.GetObject(entry.ObjectType, entry.ObjectUrl);
                 InitializeDelegates();
                 IUser user = new User(UserNumber, UserName, PutTextByCallBack);
                 registerUser.BeginInvoke(user, ar => {

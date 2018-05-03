@@ -1,26 +1,26 @@
 ﻿using CentralManagerInterface;
 using System;
 using System.Collections.Concurrent;
-using BrokerInterface;
 using MessageImpl;
 using GroupImpl;
 using System.Collections.Generic;
+using BrokerClientInterface;
 
 namespace CentralManagerImpl
 {
     public class CentralManager : MarshalByRefObject, ICentralManager
     {
         
-        private readonly ConcurrentBag<IBroker> brokers = new ConcurrentBag<IBroker>();
+        private readonly ConcurrentBag<IBrokerClient> brokers = new ConcurrentBag<IBrokerClient>();
 
-        public CentralManager(IEnumerable<IBroker> brokers)
+        public CentralManager(IEnumerable<IBrokerClient> brokers)
         {
-            this.brokers = new ConcurrentBag<IBroker>(brokers);
+            this.brokers = new ConcurrentBag<IBrokerClient>(brokers);
         }
 
-        public void RegisterGroup(Group group, IBroker callerBroker)
+        public void RegisterGroup(Group group, IBrokerClient callerBroker)
         {
-            foreach (IBroker broker in brokers)
+            foreach (IBrokerClient broker in brokers)
             {
                 try
                 {
@@ -35,9 +35,9 @@ namespace CentralManagerImpl
             }
         }
 
-        public void AddUserToGroup(string groupName, int destNumber, IBroker callerBroker)
+        public void AddUserToGroup(string groupName, int destNumber, IBrokerClient callerBroker)
         {
-            foreach (IBroker broker in brokers)
+            foreach (IBrokerClient broker in brokers)
             {
                 try
                 {
@@ -52,9 +52,9 @@ namespace CentralManagerImpl
             }
         }
 
-        public void SendMessageToBrokers(int receiver, Message message, IBroker callerBroker)
+        public void SendMessageToBrokers(int receiver, Message message, IBrokerClient callerBroker)
         {
-            foreach (IBroker broker in brokers)
+            foreach (IBrokerClient broker in brokers)
             {
                 try
                 {
@@ -69,9 +69,9 @@ namespace CentralManagerImpl
             }
         }
 
-        public void SendMessageToGroup(string groupName, Message message, IBroker callerBroker)
+        public void SendMessageToGroup(string groupName, Message message, IBrokerClient callerBroker)
         {
-            foreach (IBroker broker in brokers)
+            foreach (IBrokerClient broker in brokers)
             {
                 try
                 {
@@ -86,9 +86,9 @@ namespace CentralManagerImpl
             }
         }
 
-        public void UnregisterGroup(string groupName, IBroker callerBroker)
+        public void UnregisterGroup(string groupName, IBrokerClient callerBroker)
         {
-            foreach (IBroker broker in brokers)
+            foreach (IBrokerClient broker in brokers)
             {
                 try
                 {
