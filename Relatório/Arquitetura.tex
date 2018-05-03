@@ -12,7 +12,6 @@ Um utilizador apenas interage com o servidor regional onde este está registado.
 O utilizador é cliente do servidor regional. O servidor regional é servidor do utilizador e cliente do servidor central. O servidor central é servidor do servidor regional.
 
 \section{Funcionamento}
-
 Para poder utilizar o sistema, o utilizador deve escolher em qual região pretende-se conectar. Estando este conectado, é possível usufruir das seguintes funcionalidades:
 \begin{itemize}
 	\item Enviar mensagens para o utilizador;
@@ -27,3 +26,6 @@ Para um utilizador enviar uma mensagem para outro utilizador da mesma região o 
 
 \subsection{Funcionamento em grupo}
 É possível ao utilizador criar grupos dentro de uma região e adicionar outros utilizadores quer estejam na mesma ou em diferentes regiões. A existência do grupo é replicada por todos os outros servidores regionais. Ao adicionar um utilizador de outra região, o servidor regional envia a informação ao servidor central, que por sua vez envia aos outros servidores regionais até que a região onde se encontra o utilizador receba a mensagem e o adiciona ao grupo. Aos utilizadores que pertençam a um grupo, estes têm permissão para adicionar outros utilizadores. Os utilizadores que pertencem a um grupo nunca podem sair desse grupo, só sairão quando o criador apagar o grupo.
+
+\section{Escalabilidade}
+O sistema é escalável horizontalmente. Desta forma, se um dos servidores regionais ficar sobrecarregado, é possível adicionar mais servidores regionais. 
