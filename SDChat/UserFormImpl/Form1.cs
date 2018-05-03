@@ -75,7 +75,8 @@ namespace UserFormImpl
         private void SendToUserOrGroup(string message)
         {
             if (broker == null) return;
-            string senderId = UserName ?? UserNumber.ToString();
+            string senderId = UserName.Length != 0 ? UserName : UserNumber.ToString();
+
             var senderMsg = $"{senderId}: {message}\n";
             if (userRadioBtn.Checked)
             {

@@ -19,7 +19,7 @@ namespace UserImpl
 
         public void AcceptMessage(Message message)
         {
-            string senderId = message.SenderName ?? message.SenderNumber.ToString();
+            string senderId = message.SenderName.Length != 0 ? message.SenderName : message.SenderNumber.ToString();
             string msg = $"{senderId}: {message.Msg}\n";
             action(msg);
         }
