@@ -154,6 +154,8 @@ namespace BrokerImpl
             CheckIfRegistered(srcUserNumber);
             if (!groupNames.TryGetValue(groupName, out Tuple<Group, List<int>> tuple))
                 throw new ArgumentException("The group does not exist.");
+            if (!tuple.Item2.Contains(srcUserNumber))
+                throw new ArgumentException("The user doesn't belong to the group.");
             var userName = users[srcUserNumber].GetUserName();
             var msg = new Message
             {
