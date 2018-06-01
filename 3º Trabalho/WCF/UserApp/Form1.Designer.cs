@@ -31,11 +31,11 @@
             this.retrieveBtn = new System.Windows.Forms.Button();
             this.deleteBtn = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.dropDownList = new System.Windows.Forms.ComboBox();
             this.valueRichBox = new System.Windows.Forms.RichTextBox();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.storeRichBox = new System.Windows.Forms.RichTextBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.storeBtn = new System.Windows.Forms.Button();
+            this.dropDownList = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -48,7 +48,7 @@
             this.retrieveBtn.TabIndex = 0;
             this.retrieveBtn.Text = "Retrieve";
             this.retrieveBtn.UseVisualStyleBackColor = true;
-            this.retrieveBtn.Click += new System.EventHandler(this.button1_Click);
+            this.retrieveBtn.Click += new System.EventHandler(this.retrieveBtn_Click);
             // 
             // deleteBtn
             // 
@@ -58,26 +58,18 @@
             this.deleteBtn.TabIndex = 1;
             this.deleteBtn.Text = "Delete";
             this.deleteBtn.UseVisualStyleBackColor = true;
+            this.deleteBtn.Click += new System.EventHandler(this.deleteBtn_Click);
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.dropDownList);
             this.panel1.Controls.Add(this.valueRichBox);
             this.panel1.Controls.Add(this.deleteBtn);
-            this.panel1.Controls.Add(this.dropDownList);
             this.panel1.Controls.Add(this.retrieveBtn);
             this.panel1.Location = new System.Drawing.Point(40, 58);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(192, 134);
             this.panel1.TabIndex = 2;
-            // 
-            // dropDownList
-            // 
-            this.dropDownList.FormattingEnabled = true;
-            this.dropDownList.Location = new System.Drawing.Point(3, 3);
-            this.dropDownList.Name = "dropDownList";
-            this.dropDownList.Size = new System.Drawing.Size(121, 21);
-            this.dropDownList.TabIndex = 3;
-            this.dropDownList.Text = "Select a key";
             // 
             // valueRichBox
             // 
@@ -88,18 +80,18 @@
             this.valueRichBox.TabIndex = 4;
             this.valueRichBox.Text = "";
             // 
-            // richTextBox1
+            // storeRichBox
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(3, 3);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(185, 88);
-            this.richTextBox1.TabIndex = 3;
-            this.richTextBox1.Text = "";
+            this.storeRichBox.Location = new System.Drawing.Point(3, 3);
+            this.storeRichBox.Name = "storeRichBox";
+            this.storeRichBox.Size = new System.Drawing.Size(185, 88);
+            this.storeRichBox.TabIndex = 3;
+            this.storeRichBox.Text = "";
             // 
             // panel2
             // 
             this.panel2.Controls.Add(this.storeBtn);
-            this.panel2.Controls.Add(this.richTextBox1);
+            this.panel2.Controls.Add(this.storeRichBox);
             this.panel2.Location = new System.Drawing.Point(271, 58);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(192, 134);
@@ -113,6 +105,17 @@
             this.storeBtn.TabIndex = 4;
             this.storeBtn.Text = "Store";
             this.storeBtn.UseVisualStyleBackColor = true;
+            this.storeBtn.Click += new System.EventHandler(this.storeBtn_Click);
+            // 
+            // dropDownList
+            // 
+            this.dropDownList.FormattingEnabled = true;
+            this.dropDownList.Location = new System.Drawing.Point(4, 3);
+            this.dropDownList.MaxDropDownItems = 20;
+            this.dropDownList.Name = "dropDownList";
+            this.dropDownList.Size = new System.Drawing.Size(185, 21);
+            this.dropDownList.TabIndex = 5;
+            this.dropDownList.Text = "Select a key";
             // 
             // Form1
             // 
@@ -136,10 +139,10 @@
         private System.Windows.Forms.Button deleteBtn;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.RichTextBox valueRichBox;
-        private System.Windows.Forms.ComboBox dropDownList;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox storeRichBox;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button storeBtn;
+        private System.Windows.Forms.ComboBox dropDownList;
     }
 }
 
