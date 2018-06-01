@@ -5,7 +5,6 @@ using System.Threading;
 
 namespace HostKVStorage
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "KVService" in both code and config file together.
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
     public class KVService : IKVService
     {
