@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
 using System.ServiceModel;
-using System.Text;
 using System.Threading;
 
-namespace Storages
+namespace HostKVStorage
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "KV" in both code and config file together.
-    public class KV : IKV
+    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "KVService" in both code and config file together.
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
+    public class KVService : IKVService
     {
         private readonly ConcurrentDictionary<int, string> values = new ConcurrentDictionary<int, string>();
         private volatile int counter = -1;

@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="KVService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IKVService_StoreData_InputMessage">
+    <wsdl:part name="parameters" element="tns:StoreData" />
+  </wsdl:message>
+  <wsdl:message name="IKVService_StoreData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:StoreDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="IKVService_StoreData_ArgumentExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/System" name="detail" element="q1:ArgumentException" />
+  </wsdl:message>
+  <wsdl:message name="IKVService_RetrieveData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveData" />
+  </wsdl:message>
+  <wsdl:message name="IKVService_RetrieveData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="IKVService_RetrieveData_ArgumentExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/System" name="detail" element="q2:ArgumentException" />
+  </wsdl:message>
+  <wsdl:message name="IKVService_DeleteData_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteData" />
+  </wsdl:message>
+  <wsdl:message name="IKVService_DeleteData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="IKVService_DeleteData_ArgumentExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/System" name="detail" element="q3:ArgumentException" />
+  </wsdl:message>
+  <wsdl:portType name="IKVService">
+    <wsdl:operation name="StoreData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IKVService/StoreData" message="tns:IKVService_StoreData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IKVService/StoreDataResponse" message="tns:IKVService_StoreData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IKVService/StoreDataArgumentExceptionFault" name="ArgumentExceptionFault" message="tns:IKVService_StoreData_ArgumentExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IKVService/RetrieveData" message="tns:IKVService_RetrieveData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IKVService/RetrieveDataResponse" message="tns:IKVService_RetrieveData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IKVService/RetrieveDataArgumentExceptionFault" name="ArgumentExceptionFault" message="tns:IKVService_RetrieveData_ArgumentExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IKVService/DeleteData" message="tns:IKVService_DeleteData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IKVService/DeleteDataResponse" message="tns:IKVService_DeleteData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IKVService/DeleteDataArgumentExceptionFault" name="ArgumentExceptionFault" message="tns:IKVService_DeleteData_ArgumentExceptionFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IKVService" type="tns:IKVService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="StoreData">
+      <soap:operation soapAction="http://tempuri.org/IKVService/StoreData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ArgumentExceptionFault">
+        <soap:fault use="literal" name="ArgumentExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveData">
+      <soap:operation soapAction="http://tempuri.org/IKVService/RetrieveData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ArgumentExceptionFault">
+        <soap:fault use="literal" name="ArgumentExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteData">
+      <soap:operation soapAction="http://tempuri.org/IKVService/DeleteData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ArgumentExceptionFault">
+        <soap:fault use="literal" name="ArgumentExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="KVService">
+    <wsdl:port name="BasicHttpBinding_IKVService" binding="tns:BasicHttpBinding_IKVService">
+      <soap:address location="http://localhost:8733/Design_Time_Addresses/HostKVStorage/KVService/" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
