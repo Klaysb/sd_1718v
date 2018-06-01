@@ -4,13 +4,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.ServiceModel;
-using System.Threading;
 using System.Xml;
 using System.Xml.Serialization;
 
 namespace HostBroker
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "BrokerService" in both code and config file together.
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple)]
     public class BrokerService : IBrokerService
     {
