@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Configuration;
 using System.ServiceModel;
-using System.ServiceModel.Description;
+using System.ServiceModel.Configuration;
 
 namespace HostKVStorage
 {
@@ -8,33 +9,12 @@ namespace HostKVStorage
     {
         static void Main(string[] args)
         {
-            Uri addr1 = new Uri("http://localhost:8080/svc1");
-            Type svcType = typeof(KVService);
-            //BasicHttpBinding bind = new BasicHttpBinding();
-            WSDualHttpBinding bind = new WSDualHttpBinding();
-            ServiceHost svcHost = new ServiceHost(svcType);
-
-            ServiceMetadataBehavior smb = svcHost.Description.Behaviors.Find<ServiceMetadataBehavior>();
-
-            if (smb != null)
+            using (ServiceHost host = new ServiceHost(typeof(KVService)))
             {
-                smb.HttpGetEnabled = true;
-                smb.HttpGetUrl = addr1;
+                host.Open();
+                Console.WriteLine("Storage service started at {0}.", host.BaseAddresses[0]);
+                Console.ReadLine();
             }
-            else
-            {
-                smb = new ServiceMetadataBehavior
-                {
-                    HttpGetEnabled = true,
-                    HttpGetUrl = addr1
-                };
-                svcHost.Description.Behaviors.Add(smb);
-            }
-
-            svcHost.AddServiceEndpoint(typeof(IKVService), bind, addr1);
-            svcHost.Open();
-            Console.WriteLine("Service hosted. To close hosting, Press Enter.");
-            Console.ReadLine();
         }
     }
 }

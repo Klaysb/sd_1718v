@@ -2,7 +2,6 @@
 using System.Configuration;
 using System.ServiceModel;
 using System.ServiceModel.Configuration;
-using System.ServiceModel.Description;
 
 namespace HostBroker
 {
@@ -10,8 +9,12 @@ namespace HostBroker
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Service hosted. To close hosting, Press Enter.");
-            Console.ReadLine();
+            using (ServiceHost host = new ServiceHost(typeof(BrokerService)))
+            {
+                host.Open();
+                Console.WriteLine("Broker service started at {0}.", host.BaseAddresses[0]);
+                Console.ReadLine();
+            }
         }
     }
 }
