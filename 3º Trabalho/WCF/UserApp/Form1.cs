@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.ServiceModel.Configuration;
 using System.Windows.Forms;
 using UserApp.BrokerService;
 
@@ -6,14 +9,33 @@ namespace UserApp
 {
     public partial class Form1 : Form
     {
-
-        private readonly BrokerServiceClient broker;
+        private BrokerServiceClient broker;
         private int counter = 0;
 
         public Form1()
         {
             InitializeComponent();
-            broker = new BrokerServiceClient();
+            FillBrokersList();
+        }
+
+        private void FillBrokersList()
+        {
+            var serviceModel = ServiceModelSectionGroup.GetSectionGroup(ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None));
+            var endpoints = serviceModel.Client.Endpoints;
+            var brokers = new ToolStripMenuItem[endpoints.Count];
+            for (int i = 0; i < endpoints.Count; i++)
+            {
+                var elem = endpoints[i];
+                var item = new ToolStripMenuItem
+                {
+                    Text = elem.Name,
+                    Name = elem.Name,
+                    Tag = elem.Address
+                };
+                brokers[i] = item;
+            }
+
+            brokerList.Items.AddRange(brokers);
         }
 
         private void retrieveBtn_Click(object sender, EventArgs e)
@@ -23,6 +45,8 @@ namespace UserApp
                 MessageBox.Show("Please select a key.");
                 return;
             }
+
+            if (!VerifySelectedBroker()) return;
             var item = dropDownList.SelectedItem as ToolStripMenuItem;
             var key = item.Tag as Key;
             try
@@ -49,13 +73,17 @@ namespace UserApp
                 MessageBox.Show("Specify the value.");
                 return;
             }
+
+            if (!VerifySelectedBroker()) return;
+
             try
             {
                 var key = broker.StoreData(value);
                 var id = $"Key {counter++}";
                 var item = new ToolStripMenuItem[]
                 {
-                    new ToolStripMenuItem {
+                    new ToolStripMenuItem
+                    {
                         Text = id,
                         Tag = key
                     }
@@ -81,6 +109,8 @@ namespace UserApp
                 MessageBox.Show("Please select a key.");
                 return;
             }
+
+            if (!VerifySelectedBroker()) return;
             var item = dropDownList.SelectedItem as ToolStripMenuItem;
             var key = item.Tag as Key;
             try
@@ -97,6 +127,19 @@ namespace UserApp
             {
                 MessageBox.Show("Cannot connect to server.");
             }
+        }
+
+        private bool VerifySelectedBroker()
+        {
+            if (brokerList.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a broker.");
+                return false;
+            }
+
+            var selected = brokerList.SelectedItem as ToolStripMenuItem;
+            broker = new BrokerServiceClient(selected.Name, selected.Tag.ToString());
+            return true;
         }
     }
 }

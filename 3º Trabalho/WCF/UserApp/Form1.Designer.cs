@@ -31,11 +31,12 @@
             this.retrieveBtn = new System.Windows.Forms.Button();
             this.deleteBtn = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.dropDownList = new System.Windows.Forms.ComboBox();
             this.valueRichBox = new System.Windows.Forms.RichTextBox();
             this.storeRichBox = new System.Windows.Forms.RichTextBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.storeBtn = new System.Windows.Forms.Button();
-            this.dropDownList = new System.Windows.Forms.ComboBox();
+            this.brokerList = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -70,6 +71,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(192, 134);
             this.panel1.TabIndex = 2;
+            // 
+            // dropDownList
+            // 
+            this.dropDownList.FormattingEnabled = true;
+            this.dropDownList.Location = new System.Drawing.Point(4, 3);
+            this.dropDownList.MaxDropDownItems = 20;
+            this.dropDownList.Name = "dropDownList";
+            this.dropDownList.Size = new System.Drawing.Size(185, 21);
+            this.dropDownList.TabIndex = 5;
+            this.dropDownList.Text = "Select a key";
             // 
             // valueRichBox
             // 
@@ -107,21 +118,22 @@
             this.storeBtn.UseVisualStyleBackColor = true;
             this.storeBtn.Click += new System.EventHandler(this.storeBtn_Click);
             // 
-            // dropDownList
+            // brokerList
             // 
-            this.dropDownList.FormattingEnabled = true;
-            this.dropDownList.Location = new System.Drawing.Point(4, 3);
-            this.dropDownList.MaxDropDownItems = 20;
-            this.dropDownList.Name = "dropDownList";
-            this.dropDownList.Size = new System.Drawing.Size(185, 21);
-            this.dropDownList.TabIndex = 5;
-            this.dropDownList.Text = "Select a key";
+            this.brokerList.FormattingEnabled = true;
+            this.brokerList.Location = new System.Drawing.Point(44, 19);
+            this.brokerList.MaxDropDownItems = 20;
+            this.brokerList.Name = "brokerList";
+            this.brokerList.Size = new System.Drawing.Size(185, 21);
+            this.brokerList.TabIndex = 6;
+            this.brokerList.Text = "Select a broker";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(527, 251);
+            this.Controls.Add(this.brokerList);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -143,6 +155,7 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button storeBtn;
         private System.Windows.Forms.ComboBox dropDownList;
+        private System.Windows.Forms.ComboBox brokerList;
     }
 }
 

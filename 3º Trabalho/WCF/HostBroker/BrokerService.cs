@@ -1,9 +1,11 @@
 ﻿using HostBroker.KVService;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.ServiceModel;
+using System.ServiceModel.Configuration;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -16,7 +18,11 @@ namespace HostBroker
 
         public BrokerService()
         {
-            storages.Add(new KVServiceClient());
+            var serviceModel = ServiceModelSectionGroup.GetSectionGroup(ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None));
+            foreach (ChannelEndpointElement a in serviceModel.Client.Endpoints)
+            {
+                storages.Add(new KVServiceClient(a.Name, a.Address.ToString()));
+            }
         }
 
         public void DeleteData(Key key)
@@ -78,9 +84,9 @@ namespace HostBroker
                     int index = storage.StoreData(xml);
                     key.Indexes.Add(index);
                     key.Storages.Add(storage.Endpoint.Address.ToString());
-                    if (++counter == 2) break;
+                    //if (++counter == 2) break;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     // Nothing to do
                 }
