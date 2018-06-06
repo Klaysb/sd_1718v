@@ -26,28 +26,27 @@ namespace UserApp
             for (int i = 0; i < endpoints.Count; i++)
             {
                 var elem = endpoints[i];
-                var item = new ToolStripMenuItem
+                var item = new ToolStripMenuItem()
                 {
-                    Text = elem.Name,
                     Name = elem.Name,
+                    Text = elem.Name,
                     Tag = elem.Address
                 };
                 brokers[i] = item;
             }
-
-            brokerList.Items.AddRange(brokers);
+            BrokerComboBox.Items.AddRange(brokers);
         }
 
         private void retrieveBtn_Click(object sender, EventArgs e)
         {
-            if (dropDownList.SelectedItem == null)
+            if (KeyComboBox.SelectedItem == null)
             {
                 MessageBox.Show("Please select a key.");
                 return;
             }
 
             if (!VerifySelectedBroker()) return;
-            var item = dropDownList.SelectedItem as ToolStripMenuItem;
+            var item = KeyComboBox.SelectedItem as ToolStripMenuItem;
             var key = item.Tag as Key;
             try
             {
@@ -88,7 +87,7 @@ namespace UserApp
                         Tag = key
                     }
                 };
-                dropDownList.Items.AddRange(item);
+                KeyComboBox.Items.AddRange(item);
                 storeRichBox.ResetText();
                 MessageBox.Show("Value stored with success.");
             }
@@ -104,19 +103,19 @@ namespace UserApp
 
         private void deleteBtn_Click(object sender, EventArgs e)
         {
-            if (dropDownList.SelectedItem == null)
+            if (KeyComboBox.SelectedItem == null)
             {
                 MessageBox.Show("Please select a key.");
                 return;
             }
 
             if (!VerifySelectedBroker()) return;
-            var item = dropDownList.SelectedItem as ToolStripMenuItem;
+            var item = KeyComboBox.SelectedItem as ToolStripMenuItem;
             var key = item.Tag as Key;
             try
             {
                 broker.DeleteData(key);
-                dropDownList.Items.Remove(item);
+                KeyComboBox.Items.Remove(item);
                 MessageBox.Show("Delete with success.");
             }
             catch (ArgumentException ex)
@@ -131,13 +130,13 @@ namespace UserApp
 
         private bool VerifySelectedBroker()
         {
-            if (brokerList.SelectedItem == null)
+            if (BrokerComboBox.SelectedItem == null)
             {
                 MessageBox.Show("Please select a broker.");
                 return false;
             }
 
-            var selected = brokerList.SelectedItem as ToolStripMenuItem;
+            var selected = BrokerComboBox.SelectedItem as ToolStripMenuItem;
             broker = new BrokerServiceClient(selected.Name, selected.Tag.ToString());
             return true;
         }

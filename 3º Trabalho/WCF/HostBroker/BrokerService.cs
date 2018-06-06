@@ -73,7 +73,6 @@ namespace HostBroker
         public Key StoreData(object value)
         {
             Key key = new Key();
-            int counter = 0;
             string xml = ObjectToXml(value);
 
             foreach (var storage in storages)
@@ -84,7 +83,6 @@ namespace HostBroker
                     int index = storage.StoreData(xml);
                     key.Indexes.Add(index);
                     key.Storages.Add(storage.Endpoint.Address.ToString());
-                    //if (++counter == 2) break;
                 }
                 catch (Exception)
                 {
@@ -93,7 +91,6 @@ namespace HostBroker
                 
 
             }
-            if (counter == 0) throw new ArgumentException("The system could not save your value.");
             return key;
         }
 
