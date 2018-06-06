@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2043
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HostKVStorage", "HostKVStorage\HostKVStorage.csproj", "{E9772B4D-095E-4470-A7F3-8A82F17CB3BD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "oldHostKVStorage", "HostKVStorage\oldHostKVStorage.csproj", "{E9772B4D-095E-4470-A7F3-8A82F17CB3BD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HostBroker", "HostBroker\HostBroker.csproj", "{80942E36-5259-46B7-9F39-1485AF01F488}"
 	ProjectSection(ProjectDependencies) = postProject

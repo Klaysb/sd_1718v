@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HostBroker.KVService {
+namespace Broker.KVService {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -38,12 +38,12 @@ namespace HostBroker.KVService {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IKVServiceChannel : HostBroker.KVService.IKVService, System.ServiceModel.IClientChannel {
+    public interface IKVServiceChannel : Broker.KVService.IKVService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class KVServiceClient : System.ServiceModel.ClientBase<HostBroker.KVService.IKVService>, HostBroker.KVService.IKVService {
+    public partial class KVServiceClient : System.ServiceModel.ClientBase<Broker.KVService.IKVService>, Broker.KVService.IKVService {
         
         public KVServiceClient() {
         }

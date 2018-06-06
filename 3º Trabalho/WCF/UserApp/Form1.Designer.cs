@@ -31,6 +31,8 @@
             this.retrieveBtn = new System.Windows.Forms.Button();
             this.deleteBtn = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.KeyComboBox = new System.Windows.Forms.ToolStripComboBox();
             this.valueRichBox = new System.Windows.Forms.RichTextBox();
             this.storeRichBox = new System.Windows.Forms.RichTextBox();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -39,12 +41,10 @@
             this.KeyLabel = new System.Windows.Forms.Label();
             this.BrokerMenuStrip = new System.Windows.Forms.MenuStrip();
             this.BrokerComboBox = new System.Windows.Forms.ToolStripComboBox();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.KeyComboBox = new System.Windows.Forms.ToolStripComboBox();
             this.panel1.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.BrokerMenuStrip.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // retrieveBtn
@@ -77,6 +77,24 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(192, 134);
             this.panel1.TabIndex = 2;
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.KeyComboBox});
+            this.menuStrip1.Location = new System.Drawing.Point(-3, 1);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(131, 27);
+            this.menuStrip1.TabIndex = 10;
+            this.menuStrip1.Text = "Select a broker";
+            // 
+            // KeyComboBox
+            // 
+            this.KeyComboBox.Name = "KeyComboBox";
+            this.KeyComboBox.Size = new System.Drawing.Size(121, 23);
+            this.KeyComboBox.Text = "Select a key";
             // 
             // valueRichBox
             // 
@@ -150,24 +168,6 @@
             this.BrokerComboBox.Size = new System.Drawing.Size(121, 23);
             this.BrokerComboBox.Text = "Select a broker";
             // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
-            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.KeyComboBox});
-            this.menuStrip1.Location = new System.Drawing.Point(-3, 1);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(251, 27);
-            this.menuStrip1.TabIndex = 10;
-            this.menuStrip1.Text = "Select a broker";
-            // 
-            // KeyComboBox
-            // 
-            this.KeyComboBox.Name = "KeyComboBox";
-            this.KeyComboBox.Size = new System.Drawing.Size(121, 23);
-            this.KeyComboBox.Text = "Select a key";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -184,11 +184,11 @@
             this.Text = "Form1";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.BrokerMenuStrip.ResumeLayout(false);
             this.BrokerMenuStrip.PerformLayout();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
