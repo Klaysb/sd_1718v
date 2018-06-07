@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="a8235016-ecf5-4694-8298-058dbef6584e" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="c1e2cb9f-112e-4fd1-b6f4-2626e7d1a20f" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,16 +19,16 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:8733/Design_Time_Addresses/Broker/BrokerService/" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:8736/Design_Time_Addresses/Broker/BrokerService/" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="784c3125-fc87-43ad-84b2-eda270a2ac73" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/Broker/BrokerService/?xsd=xsd2" />
-    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="4287a4a1-6acd-45ff-b6ad-4071fcd9b2bd" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/Broker/BrokerService/?xsd=xsd3" />
-    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="37f23b65-31ef-4fb2-8ca5-db1744340582" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/Broker/BrokerService/?xsd=xsd0" />
-    <MetadataFile FileName="item3.xsd" MetadataType="Schema" ID="b3254241-11f0-4495-ae40-c2b1ea693be0" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/Broker/BrokerService/?xsd=xsd1" />
-    <MetadataFile FileName="item4.xsd" MetadataType="Schema" ID="1c7491dc-f512-446d-9995-1e62b03fda3a" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/Broker/BrokerService/?xsd=xsd4" />
-    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="d75154e2-acd1-43a1-b402-1f7f549f5a52" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/Broker/BrokerService/?disco" />
-    <MetadataFile FileName="BrokerService.wsdl" MetadataType="Wsdl" ID="fdb65bf2-d816-425b-a742-11f27b7c02e2" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/Broker/BrokerService/?wsdl" />
+    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="cf729c6c-bd8a-4ab2-80cf-0a06282e6d71" SourceId="1" SourceUrl="http://localhost:8736/Design_Time_Addresses/Broker/BrokerService/?disco" />
+    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="cdd8826c-c649-4f96-98c5-f7897ffa1509" SourceId="1" SourceUrl="http://localhost:8736/Design_Time_Addresses/Broker/BrokerService/?xsd=xsd0" />
+    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="24b3b754-2f8b-4a9d-ac6f-65bcf1263ec3" SourceId="1" SourceUrl="http://localhost:8736/Design_Time_Addresses/Broker/BrokerService/?xsd=xsd1" />
+    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="a3e31742-8ba2-4b59-a5e3-96366d5f6feb" SourceId="1" SourceUrl="http://localhost:8736/Design_Time_Addresses/Broker/BrokerService/?xsd=xsd2" />
+    <MetadataFile FileName="item3.xsd" MetadataType="Schema" ID="6c992523-6503-4702-9361-fba382e2a64b" SourceId="1" SourceUrl="http://localhost:8736/Design_Time_Addresses/Broker/BrokerService/?xsd=xsd3" />
+    <MetadataFile FileName="item4.xsd" MetadataType="Schema" ID="1a7ae583-3c62-4b4a-b3a9-af0eb3250532" SourceId="1" SourceUrl="http://localhost:8736/Design_Time_Addresses/Broker/BrokerService/?xsd=xsd4" />
+    <MetadataFile FileName="BrokerService.wsdl" MetadataType="Wsdl" ID="275199d9-d300-4deb-9a0e-405bd9ea44ac" SourceId="1" SourceUrl="http://localhost:8736/Design_Time_Addresses/Broker/BrokerService/?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

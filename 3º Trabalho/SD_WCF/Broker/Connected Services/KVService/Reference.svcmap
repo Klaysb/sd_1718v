@@ -22,11 +22,11 @@
     <MetadataSource Address="http://localhost:8733/Design_Time_Addresses/KVStorage/KVService/" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="4ea1fb58-5b40-4ace-901e-b017a3240115" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/KVStorage/KVService/?xsd=xsd1" />
-    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="b1abf58a-425a-464c-af02-541b733ebe02" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/KVStorage/KVService/?disco" />
     <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="865ac12d-c35b-4bd0-95ef-a9975857202a" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/KVStorage/KVService/?xsd=xsd2" />
-    <MetadataFile FileName="KVService.wsdl" MetadataType="Wsdl" ID="b89078d5-a04c-43e2-9014-ee77a644a492" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/KVStorage/KVService/?wsdl" />
+    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="b1abf58a-425a-464c-af02-541b733ebe02" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/KVStorage/KVService/?disco" />
     <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="27b0be1b-33a5-4b75-bd2a-ea8a1731dbf5" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/KVStorage/KVService/?xsd=xsd0" />
+    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="4ea1fb58-5b40-4ace-901e-b017a3240115" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/KVStorage/KVService/?xsd=xsd1" />
+    <MetadataFile FileName="KVService.wsdl" MetadataType="Wsdl" ID="b89078d5-a04c-43e2-9014-ee77a644a492" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/KVStorage/KVService/?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

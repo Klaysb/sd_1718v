@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/System" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/System" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:8733/Design_Time_Addresses/Broker/BrokerService/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-  <xs:complexType name="ArgumentException">
+  <xs:import schemaLocation="http://localhost:8736/Design_Time_Addresses/Broker/BrokerService/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="InvalidOperationException">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:SystemException" />
     </xs:complexContent>
   </xs:complexType>
-  <xs:element name="ArgumentException" nillable="true" type="tns:ArgumentException" />
+  <xs:element name="InvalidOperationException" nillable="true" type="tns:InvalidOperationException" />
   <xs:complexType name="SystemException">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Exception" />
@@ -20,4 +20,10 @@
     <xs:attribute ref="ser:FactoryType" />
   </xs:complexType>
   <xs:element name="Exception" nillable="true" type="tns:Exception" />
+  <xs:complexType name="ArgumentException">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:SystemException" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ArgumentException" nillable="true" type="tns:ArgumentException" />
 </xs:schema>

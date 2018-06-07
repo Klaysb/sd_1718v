@@ -7,7 +7,9 @@ namespace KVStorage
     public interface IKVService
     {
         [OperationContract]
-        [FaultContract(typeof(ArgumentException))]
+        int GetCount();
+
+        [OperationContract]
         int StoreData(string value);
 
         [OperationContract]

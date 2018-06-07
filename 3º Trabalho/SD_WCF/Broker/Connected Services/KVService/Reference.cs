@@ -15,6 +15,12 @@ namespace Broker.KVService {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="KVService.IKVService")]
     public interface IKVService {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IKVService/GetCount", ReplyAction="http://tempuri.org/IKVService/GetCountResponse")]
+        int GetCount();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IKVService/GetCount", ReplyAction="http://tempuri.org/IKVService/GetCountResponse")]
+        System.Threading.Tasks.Task<int> GetCountAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IKVService/StoreData", ReplyAction="http://tempuri.org/IKVService/StoreDataResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(System.ArgumentException), Action="http://tempuri.org/IKVService/StoreDataArgumentExceptionFault", Name="ArgumentException", Namespace="http://schemas.datacontract.org/2004/07/System")]
         int StoreData(string value);
@@ -62,6 +68,14 @@ namespace Broker.KVService {
         
         public KVServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
+        }
+        
+        public int GetCount() {
+            return base.Channel.GetCount();
+        }
+        
+        public System.Threading.Tasks.Task<int> GetCountAsync() {
+            return base.Channel.GetCountAsync();
         }
         
         public int StoreData(string value) {

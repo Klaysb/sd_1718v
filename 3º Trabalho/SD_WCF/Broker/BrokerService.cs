@@ -8,9 +8,10 @@ using System.ServiceModel.Configuration;
 
 namespace Broker
 {
-    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple)]
+    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, InstanceContextMode = InstanceContextMode.PerCall)]
     public class BrokerService : IBrokerService
     {
+        private static readonly int MAX_SAVES = 2;
         private List<KVServiceClient> storages = new List<KVServiceClient>();
 
         public BrokerService()
@@ -43,7 +44,13 @@ namespace Broker
                 }
             }
 
-            if (!wasDeleted) throw new ArgumentException("Value cannot be deleted.");
+            if (!wasDeleted)
+            {
+                throw new FaultException<ArgumentException>(
+                    new ArgumentException("Value cannot be deleted."),
+                    new FaultReason("Value cannot be deleted.")
+                );
+            }
         }
 
         public string RetrieveData(Key key)
@@ -53,7 +60,6 @@ namespace Broker
             {
                 var st = key.Storages[i];
                 var kv = GetStorage(st);
-
                 try
                 {
                     return kv.RetrieveData(key.Indexes[i]);
@@ -63,34 +69,76 @@ namespace Broker
                     // TODO ???
                 }
             }
-            throw new ArgumentException("Value not found.");
+            throw new FaultException<ArgumentException>(
+                new ArgumentException("Value not found."),
+                new FaultReason("Value not found.")
+            );
         }
 
         public Key StoreData(string value)
         {
             Key key = new Key();
+
+            // Determine storage capacity
+            List<Tuple<int, KVServiceClient>> counter = new List<Tuple<int, KVServiceClient>>();
             foreach (var storage in storages)
             {
-                // TODO ALGORITMO E LOCALIZAÇÃO
                 try
                 {
+                    int count = storage.GetCount();
+                    counter.Add(new Tuple<int, KVServiceClient>(count, storage));
+                }
+                catch (Exception ex)
+                {
+                    // Storage not available.
+                }
+            }
+
+            // orders by storage size ascending
+            counter.OrderBy(t => t.Item1);
+            if (counter.Count < MAX_SAVES)
+            {
+                throw new FaultException<InvalidOperationException>(
+                    new InvalidOperationException("Could not save the value."),
+                    new FaultReason("Could not save the value.")
+                );
+            }
+            int saved = 0;
+            foreach(var tuple in counter)
+            {
+                try
+                {
+                    var storage = tuple.Item2;
                     int index = storage.StoreData(value);
                     key.Indexes.Add(index);
                     key.Storages.Add(storage.Endpoint.Address.ToString());
+                    saved++;
                 }
                 catch (Exception)
                 {
-                    // Nothing to do
+
                 }
-
-
+                if (saved == MAX_SAVES) break;
+            }
+            if (saved != MAX_SAVES)
+            {
+                throw new FaultException<InvalidOperationException>(
+                    new InvalidOperationException("Could not save the value."),
+                    new FaultReason("Could not save the value.")
+                );
             }
             return key;
         }
 
         private void CheckKey(Key key)
         {
-            if (key == null) throw new ArgumentException("Key cannot be null.");
+            if (key == null)
+            {
+                throw new FaultException<ArgumentException>(
+                    new ArgumentException("Key cannot be null."),
+                    new FaultReason("Key cannot be null.")
+                );
+            }
         }
 
         private KVServiceClient GetStorage(string address)

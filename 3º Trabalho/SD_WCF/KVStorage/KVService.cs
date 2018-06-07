@@ -11,16 +11,31 @@ namespace KVStorage
         private readonly ConcurrentDictionary<int, string> values = new ConcurrentDictionary<int, string>();
         private volatile int counter = -1;
 
+        public int GetCount()
+        {
+            return values.Count;
+        }
+
         public void DeleteData(int key)
         {
             if (!values.TryRemove(key, out string value))
-                throw new ArgumentException("Key not found");
+            {
+                throw new FaultException<ArgumentException>(
+                    new ArgumentException("Key not found."),
+                    new FaultReason("Key not found.")
+                );
+            }
         }
 
         public string RetrieveData(int key)
         {
             if (!values.TryGetValue(key, out string value))
-                throw new ArgumentException("Key not found");
+            {
+                throw new FaultException<ArgumentException>(
+                    new ArgumentException("Key not found."),
+                    new FaultReason("Key not found.")
+                );
+            }
             return value;
         }
 

@@ -79,7 +79,7 @@ namespace UserApp.BrokerService {
     public interface IBrokerService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBrokerService/StoreData", ReplyAction="http://tempuri.org/IBrokerService/StoreDataResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ArgumentException), Action="http://tempuri.org/IBrokerService/StoreDataArgumentExceptionFault", Name="ArgumentException", Namespace="http://schemas.datacontract.org/2004/07/System")]
+        [System.ServiceModel.FaultContractAttribute(typeof(System.InvalidOperationException), Action="http://tempuri.org/IBrokerService/StoreDataInvalidOperationExceptionFault", Name="InvalidOperationException", Namespace="http://schemas.datacontract.org/2004/07/System")]
         UserApp.BrokerService.Key StoreData(string value);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBrokerService/StoreData", ReplyAction="http://tempuri.org/IBrokerService/StoreDataResponse")]

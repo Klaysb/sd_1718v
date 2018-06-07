@@ -7,7 +7,7 @@ namespace Broker
     public interface IBrokerService
     {
         [OperationContract]
-        [FaultContract(typeof(ArgumentException))]
+        [FaultContract(typeof(InvalidOperationException))]
         Key StoreData(string value);
 
         [OperationContract]
