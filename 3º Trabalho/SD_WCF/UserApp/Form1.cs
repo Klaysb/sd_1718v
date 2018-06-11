@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Configuration;
+using System.IO;
 using System.ServiceModel.Configuration;
 using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Serialization;
 using UserApp.BrokerService;
 
 namespace UserApp
@@ -49,9 +52,9 @@ namespace UserApp
             var key = item.Tag as Key;
             try
             {
-                var value = broker.RetrieveData(key);
+                var value = XmlToObject(broker.RetrieveData(key)) as string;
                 valueRichBox.ResetText();
-                valueRichBox.AppendText(value.ToString());
+                valueRichBox.AppendText(value);
             }
             catch (ArgumentException ex)
             {
@@ -76,7 +79,7 @@ namespace UserApp
 
             try
             {
-                var key = broker.StoreData(value);
+                var key = broker.StoreData(ObjectToXml(value));
                 var id = $"Key {counter++}";
                 var item = new ToolStripMenuItem[]
                 {
@@ -138,6 +141,31 @@ namespace UserApp
             var selected = BrokerComboBox.SelectedItem as ToolStripMenuItem;
             broker = new BrokerServiceClient(selected.Name, selected.Tag.ToString());
             return true;
+        }
+
+        private static string ObjectToXml(object value)
+        {
+            var xmlSerializer = new XmlSerializer(typeof(object));
+            var xml = "";
+
+            using (var sw = new StringWriter())
+            {
+                using (var xmlWriter = XmlWriter.Create(sw))
+                {
+                    xmlSerializer.Serialize(xmlWriter, value);
+                    xml = sw.ToString();
+                }
+            }
+            return xml;
+        }
+
+        private static object XmlToObject(string xml)
+        {
+            var xmlSerializer = new XmlSerializer(typeof(object));
+            using (var reader = new StringReader(xml))
+            {
+                return xmlSerializer.Deserialize(reader);
+            }
         }
     }
 }
