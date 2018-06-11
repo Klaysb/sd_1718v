@@ -1,0 +1,27 @@
+\chapter{Requisitos}
+Neste capitulo é descrito os requisitos funcionais do sistema, assim como os não funcionais.
+\section{Funcionais}
+Os requisitos funcionais deste sistema são os seguintes apresentados:
+\begin{itemize}
+	\item Evitar sobrecarga nos servidores de armazenamento;
+	\item O cliente comunica apenas com um serviço intermediário (\textit{broker});
+	\item O cliente conhece todos os servidores \textit{brokers};
+	\item O cliente pode escolher a qual \textit{broker} se quer ligar;
+	\item O cliente pode guardar, obter e apagar dados;
+	\item Os \textit{brokers} devem ser \textit{stateless};
+	\item Os \textit{brokers} têm conhecimento de todos os servidores de armazenamento;
+	\item Os \textit{brokers} implementam um algoritmo de escolha dos servidores de armazenamento de forma a evitar a sobrecarga;
+	\item Os servidores de armazenamento devem suportar qualquer tipo de dados independentemente das aplicações cliente;
+	\item Os servidores de armazenamento mantêm dados em memória;
+	\item As chaves geradas pelos \textit{brokers} devem conter informação da localização dos dados.
+\end{itemize}
+\section{Não Funcionais}
+Os requisitos não funcionais deste sistema são os seguintes apresentados:
+\begin{itemize}
+	\item Aplicação cliente realizada em WinForm (.NET);
+	\item Aplicação cliente realizada em Java;
+	\item Ter um sistema escalável horizontalmente e fiável;
+	\item Transparência à concorrência no acesso dos servidores;
+	\item Suportar vários canais de comunicação (e.g.: HTTP, TCP);
+	\item Tratar as falhas de forma a que o sistema continue funcional, mesmo com a existência de erros em um dos servidores.
+\end{itemize}

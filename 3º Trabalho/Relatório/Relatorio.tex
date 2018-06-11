@@ -1,0 +1,54 @@
+\documentclass[a4paper, 11pt]{report}
+
+% Packages a utilizar e respetivos parâmetros.
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage{indentfirst}
+\usepackage{graphicx}
+
+% Definições das dimensões das páginas
+\setlength{\textheight}{24.00cm}
+\setlength{\textwidth}{15.50cm}
+\setlength{\topmargin}{0.35cm}
+\setlength{\headheight}{0cm}
+\setlength{\headsep}{0cm}
+\setlength{\oddsidemargin}{0.25cm}
+\setlength{\evensidemargin}{0.25cm}
+
+%
+% Times New Roman font.
+%
+\usefont{T1}{ptm}{m}{n}
+\selectfont
+
+% Title Page
+\title{3º Trabalho Prático de Avaliação}
+\author{
+	\begin{tabular}{ll}
+		& Nuno Veloso 42181\\
+		& Steven Brito 42798\\
+		& Daniela Gomes 42799\\
+	\end{tabular}
+}
+
+\begin{document}
+	\maketitle
+
+	\tableofcontents	
+	
+	\include{Introducao}
+	
+	\include{Descricao}
+	
+	\include{Requisitos}
+	
+	\include{Arquitetura}
+	
+	\include{Implementacao}
+	
+	\include{Falhas}
+	
+	\include{Utilizacao}
+	
+	\include{Conclusao}
+\end{document}          

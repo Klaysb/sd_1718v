@@ -1,0 +1,20 @@
+\babel@toc {portuguese}{}
+\contentsline {chapter}{\numberline {1}Introdu\IeC {\c c}\IeC {\~a}o}{2}
+\contentsline {chapter}{\numberline {2}Descri\IeC {\c c}\IeC {\~a}o do Problema}{3}
+\contentsline {chapter}{\numberline {3}Requisitos}{4}
+\contentsline {section}{\numberline {3.1}Funcionais}{4}
+\contentsline {section}{\numberline {3.2}N\IeC {\~a}o Funcionais}{4}
+\contentsline {chapter}{\numberline {4}Arquitetura}{6}
+\contentsline {section}{\numberline {4.1}Intera\IeC {\c c}\IeC {\~a}o entre as partes}{6}
+\contentsline {section}{\numberline {4.2}Funcionamento}{6}
+\contentsline {subsection}{\numberline {4.2.1}Funcionamento}{7}
+\contentsline {section}{\numberline {4.3}Escalabilidade}{7}
+\contentsline {chapter}{\numberline {5}Implementa\IeC {\c c}\IeC {\~a}o}{8}
+\contentsline {section}{\numberline {5.1}KVService}{8}
+\contentsline {section}{\numberline {5.2}BrokerService}{9}
+\contentsline {section}{\numberline {5.3}Controlo de Concorr\IeC {\^e}ncia}{10}
+\contentsline {section}{\numberline {5.4}Ficheiros de Configura\IeC {\c c}\IeC {\~a}o}{10}
+\contentsline {chapter}{\numberline {6}Toler\IeC {\^a}ncia a Falhas}{11}
+\contentsline {chapter}{\numberline {7}Manual de utiliza\IeC {\c c}\IeC {\~a}o}{12}
+\contentsline {section}{\numberline {7.1}Utiliza\IeC {\c c}\IeC {\~a}o do Cliente}{12}
+\contentsline {chapter}{\numberline {8}Conclus\IeC {\~a}o}{14}

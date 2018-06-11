@@ -1,0 +1,7 @@
+\chapter{Tolerância a Falhas}
+
+Com esta arquitetura existem cenários em que um dos servidores de armazenamento possa falhar. Assim é necessário garantir que o \textit{broker} replique os dados pelos diferentes servidores de armazenamento. A estratégia para a replicação dos dados é guardar em pelo menos dois dos servidores de armazenamento. Se não conseguir guardar em pelo menos dois o broker indica ao utilizador que não foi possível guardar o valor.
+
+Como o \textit{broker} é \textit{stateless}, se este falhasse não iria prejudicar o sistema desde que houvesse mais \textit{brokers} disponíveis.
+
+Se o utilizador desconectar-se sem apagar os valores guardados, estes irão permanecer em memória do servidor de armazenamento. O servidor de armazenamento não tem maneira de saber a quem pertence os valores visto que não interage com os utilizadores, logo não existe forma de saber se o utilizador desconectou-se
