@@ -39,7 +39,7 @@ namespace UserApp
             BrokerComboBox.Items.AddRange(brokers);
         }
 
-        private void retrieveBtn_Click(object sender, EventArgs e)
+        private async void retrieveBtn_Click(object sender, EventArgs e)
         {
             if (KeyComboBox.SelectedItem == null)
             {
@@ -52,7 +52,7 @@ namespace UserApp
             var key = item.Tag as Key;
             try
             {
-                var value = XmlToObject(broker.RetrieveData(key)) as string;
+                var value = XmlToObject(await broker.RetrieveDataAsync(key)) as string;
                 valueRichBox.ResetText();
                 valueRichBox.AppendText(value);
             }
@@ -66,7 +66,7 @@ namespace UserApp
             }
         }
 
-        private void storeBtn_Click(object sender, EventArgs e)
+        private async void storeBtn_Click(object sender, EventArgs e)
         {
             var value = storeRichBox.Text;
             if (value == null || value.Equals(string.Empty))
@@ -79,7 +79,7 @@ namespace UserApp
 
             try
             {
-                var key = broker.StoreData(ObjectToXml(value));
+                var key = await broker.StoreDataAsync(ObjectToXml(value));
                 var id = $"Key {counter++}";
                 var item = new ToolStripMenuItem[]
                 {
@@ -103,7 +103,7 @@ namespace UserApp
             }
         }
 
-        private void deleteBtn_Click(object sender, EventArgs e)
+        private async void deleteBtn_Click(object sender, EventArgs e)
         {
             if (KeyComboBox.SelectedItem == null)
             {
@@ -116,7 +116,7 @@ namespace UserApp
             var key = item.Tag as Key;
             try
             {
-                broker.DeleteData(key);
+                await broker.DeleteDataAsync(key);
                 KeyComboBox.Items.Remove(item);
                 MessageBox.Show("Delete with success.");
             }
