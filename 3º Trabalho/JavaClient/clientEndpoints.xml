@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<clientEndpoints>
+    <baseAddress>http://localhost:8736/Design_Time_Addresses/Broker/BrokerService/</baseAddress>
+    <baseAddress>http://localhost:8737/Design_Time_Addresses/Broker/BrokerService/</baseAddress>
+</clientEndpoints>
