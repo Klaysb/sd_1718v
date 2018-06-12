@@ -56,12 +56,12 @@ public class ObjectFactory {
     private final static QName _Byte_QNAME = new QName("http://schemas.microsoft.com/2003/10/Serialization/", "byte");
     private final static QName _Double_QNAME = new QName("http://schemas.microsoft.com/2003/10/Serialization/", "double");
     private final static QName _QName_QNAME = new QName("http://schemas.microsoft.com/2003/10/Serialization/", "QName");
-    private final static QName _RetrieveDataResponseRetrieveDataResult_QNAME = new QName("http://tempuri.org/", "RetrieveDataResult");
     private final static QName _KeyIndexes_QNAME = new QName("http://schemas.datacontract.org/2004/07/Broker", "Indexes");
     private final static QName _KeyStorages_QNAME = new QName("http://schemas.datacontract.org/2004/07/Broker", "Storages");
-    private final static QName _DeleteDataKey_QNAME = new QName("http://tempuri.org/", "key");
     private final static QName _StoreDataResponseStoreDataResult_QNAME = new QName("http://tempuri.org/", "StoreDataResult");
     private final static QName _StoreDataValue_QNAME = new QName("http://tempuri.org/", "value");
+    private final static QName _DeleteDataKey_QNAME = new QName("http://tempuri.org/", "key");
+    private final static QName _RetrieveDataResponseRetrieveDataResult_QNAME = new QName("http://tempuri.org/", "RetrieveDataResult");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: wcf
@@ -427,15 +427,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://tempuri.org/", name = "RetrieveDataResult", scope = RetrieveDataResponse.class)
-    public JAXBElement<String> createRetrieveDataResponseRetrieveDataResult(String value) {
-        return new JAXBElement<String>(_RetrieveDataResponseRetrieveDataResult_QNAME, String.class, RetrieveDataResponse.class, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ArrayOfint }{@code >}}
      * 
      */
@@ -457,24 +448,6 @@ public class ObjectFactory {
      * Create an instance of {@link JAXBElement }{@code <}{@link Key }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://tempuri.org/", name = "key", scope = DeleteData.class)
-    public JAXBElement<Key> createDeleteDataKey(Key value) {
-        return new JAXBElement<Key>(_DeleteDataKey_QNAME, Key.class, DeleteData.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Key }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://tempuri.org/", name = "key", scope = RetrieveData.class)
-    public JAXBElement<Key> createRetrieveDataKey(Key value) {
-        return new JAXBElement<Key>(_DeleteDataKey_QNAME, Key.class, RetrieveData.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Key }{@code >}}
-     * 
-     */
     @XmlElementDecl(namespace = "http://tempuri.org/", name = "StoreDataResult", scope = StoreDataResponse.class)
     public JAXBElement<Key> createStoreDataResponseStoreDataResult(Key value) {
         return new JAXBElement<Key>(_StoreDataResponseStoreDataResult_QNAME, Key.class, StoreDataResponse.class, value);
@@ -487,6 +460,33 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://tempuri.org/", name = "value", scope = StoreData.class)
     public JAXBElement<String> createStoreDataValue(String value) {
         return new JAXBElement<String>(_StoreDataValue_QNAME, String.class, StoreData.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Key }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://tempuri.org/", name = "key", scope = DeleteData.class)
+    public JAXBElement<Key> createDeleteDataKey(Key value) {
+        return new JAXBElement<Key>(_DeleteDataKey_QNAME, Key.class, DeleteData.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://tempuri.org/", name = "RetrieveDataResult", scope = RetrieveDataResponse.class)
+    public JAXBElement<String> createRetrieveDataResponseRetrieveDataResult(String value) {
+        return new JAXBElement<String>(_RetrieveDataResponseRetrieveDataResult_QNAME, String.class, RetrieveDataResponse.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Key }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://tempuri.org/", name = "key", scope = RetrieveData.class)
+    public JAXBElement<Key> createRetrieveDataKey(Key value) {
+        return new JAXBElement<Key>(_DeleteDataKey_QNAME, Key.class, RetrieveData.class, value);
     }
 
 }
